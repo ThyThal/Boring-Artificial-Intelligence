@@ -1,2 +1,6 @@
-# 2020-2C-IA
-2020-2C-IA
+### Final Inteligencia Artificial
+- Hacer Flocking
+- Añadir Avoid (Pursuit & Flee)
+- Agregar Waypoints y Agrandar Mapa.
+- Cambiar Sleep (Aumentar Curacion sin Escapar)
+- Ruleta Dinamica (Mas Valiente en Grupo)
