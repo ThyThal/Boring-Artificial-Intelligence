@@ -1,16 +1,12 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1001 &7541550623679118339
+--- !u!1001 &8632469711034245238
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 124125255, guid: 0691a3241778f2349af8e8fa114751fa, type: 3}
-      propertyPath: _target
-      value: 
-      objectReference: {fileID: 0}
     - target: {fileID: 124125255, guid: 0691a3241778f2349af8e8fa114751fa, type: 3}
       propertyPath: _sightAngle
       value: 120
@@ -35,46 +31,6 @@ PrefabInstance:
       propertyPath: _speed
       value: 7
       objectReference: {fileID: 0}
-    - target: {fileID: 124125256, guid: 0691a3241778f2349af8e8fa114751fa, type: 3}
-      propertyPath: avoidWeight
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 124125256, guid: 0691a3241778f2349af8e8fa114751fa, type: 3}
-      propertyPath: flockRadius
-      value: 15
-      objectReference: {fileID: 0}
-    - target: {fileID: 124125256, guid: 0691a3241778f2349af8e8fa114751fa, type: 3}
-      propertyPath: wanderThink
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 124125256, guid: 0691a3241778f2349af8e8fa114751fa, type: 3}
-      propertyPath: leaderWeight
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 124125256, guid: 0691a3241778f2349af8e8fa114751fa, type: 3}
-      propertyPath: rotationSpeed
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 124125256, guid: 0691a3241778f2349af8e8fa114751fa, type: 3}
-      propertyPath: distanceToWaypoint
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 124125256, guid: 0691a3241778f2349af8e8fa114751fa, type: 3}
-      propertyPath: cohesionWeightFloat
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 124125256, guid: 0691a3241778f2349af8e8fa114751fa, type: 3}
-      propertyPath: minimumDistanceNode
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 124125256, guid: 0691a3241778f2349af8e8fa114751fa, type: 3}
-      propertyPath: alignmentWeightFloat
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 124125256, guid: 0691a3241778f2349af8e8fa114751fa, type: 3}
-      propertyPath: separationWeightFloat
-      value: 10
-      objectReference: {fileID: 0}
     - target: {fileID: 124125257, guid: 0691a3241778f2349af8e8fa114751fa, type: 3}
       propertyPath: damage
       value: 10
@@ -82,7 +38,7 @@ PrefabInstance:
     - target: {fileID: 124125257, guid: 0691a3241778f2349af8e8fa114751fa, type: 3}
       propertyPath: lineOfSight
       value: 
-      objectReference: {fileID: 7541550623668501572}
+      objectReference: {fileID: 8632469711023890481}
     - target: {fileID: 124125257, guid: 0691a3241778f2349af8e8fa114751fa, type: 3}
       propertyPath: _healCooldown
       value: 1
@@ -90,7 +46,7 @@ PrefabInstance:
     - target: {fileID: 124125257, guid: 0691a3241778f2349af8e8fa114751fa, type: 3}
       propertyPath: _enemyMovement
       value: 
-      objectReference: {fileID: 7541550623668501579}
+      objectReference: {fileID: 8632469711023890494}
     - target: {fileID: 124125257, guid: 0691a3241778f2349af8e8fa114751fa, type: 3}
       propertyPath: obstacleRadius
       value: 1
@@ -104,6 +60,10 @@ PrefabInstance:
       value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 124125257, guid: 0691a3241778f2349af8e8fa114751fa, type: 3}
+      propertyPath: enemyLayer.m_Bits
+      value: 1024
+      objectReference: {fileID: 0}
+    - target: {fileID: 124125257, guid: 0691a3241778f2349af8e8fa114751fa, type: 3}
       propertyPath: distanceToWaypoint
       value: 1.2
       objectReference: {fileID: 0}
@@ -115,7 +75,7 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: d2423e8c956fabc41ada860ea86a6f5a, type: 2}
+      objectReference: {fileID: 2100000, guid: 9a655f15a9e2f004ca83c07a3203165c, type: 2}
     - target: {fileID: 2484275711389164569, guid: 0691a3241778f2349af8e8fa114751fa,
         type: 3}
       propertyPath: m_Constraints
@@ -189,12 +149,12 @@ PrefabInstance:
     - target: {fileID: 2484275711389164571, guid: 0691a3241778f2349af8e8fa114751fa,
         type: 3}
       propertyPath: m_Name
-      value: GreenBoss
+      value: OrangeBoss
       objectReference: {fileID: 0}
     - target: {fileID: 2484275711389164571, guid: 0691a3241778f2349af8e8fa114751fa,
         type: 3}
       propertyPath: m_Layer
-      value: 10
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 2484275711389164571, guid: 0691a3241778f2349af8e8fa114751fa,
         type: 3}
@@ -203,11 +163,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0691a3241778f2349af8e8fa114751fa, type: 3}
---- !u!114 &7541550623668501572 stripped
+--- !u!114 &8632469711023890481 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 124125255, guid: 0691a3241778f2349af8e8fa114751fa,
     type: 3}
-  m_PrefabInstance: {fileID: 7541550623679118339}
+  m_PrefabInstance: {fileID: 8632469711034245238}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
   m_Enabled: 1
@@ -215,11 +175,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac685ee2caeb15940b75acda8db0f7d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &7541550623668501579 stripped
+--- !u!114 &8632469711023890494 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 124125256, guid: 0691a3241778f2349af8e8fa114751fa,
     type: 3}
-  m_PrefabInstance: {fileID: 7541550623679118339}
+  m_PrefabInstance: {fileID: 8632469711034245238}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
   m_Enabled: 1

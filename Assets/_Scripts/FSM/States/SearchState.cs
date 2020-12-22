@@ -31,7 +31,7 @@ public class SearchState<T> : FSMState<T>
         _pointer = 0;
         _closestNode = FindNearestNode();
         _destiny = GetRandomNode();
-        _enemyController.targetNode = _destiny;
+        _enemyController.currentNode = _destiny.transform;
         _path = _theta.Run(_closestNode, Satisfies, GetNeighbours, GetCost, Heuristic);
     }
 
@@ -45,9 +45,9 @@ public class SearchState<T> : FSMState<T>
 
             Vector3 target = _path[_pointer].transform.position;
             Vector3 difference = target - _transform.transform.position;
-            _enemyController.currentWaypointDistance = difference.magnitude;
+            var waypointDistace = difference.magnitude;
 
-            if (_enemyController.currentWaypointDistance <= _enemyController.distanceToWaypoint)
+            if (waypointDistace <= _enemyController.enemyMovement.safeDistanceToWaypoint) // Reached Waypoint
             {
                 _pointer++;
             }
@@ -114,7 +114,7 @@ public class SearchState<T> : FSMState<T>
         _pointer = 0;
         _closestNode = FindNearestNode();
         _destiny = GetRandomNode();
-        _enemyController.targetNode = _destiny;
+        _enemyController.currentNode = _destiny.transform;
         _path = _theta.Run(_closestNode, Satisfies, GetNeighbours, GetCost, Heuristic);
     }
 }

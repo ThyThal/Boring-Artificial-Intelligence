@@ -59,8 +59,7 @@ public class LineOfSight : MonoBehaviour
     public bool SawTarget()
     {
         return _sawTarget;
-    }
-
+    } // Return if has Enemy Sight
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.blue;
@@ -68,6 +67,6 @@ public class LineOfSight : MonoBehaviour
         Gizmos.DrawWireSphere(transform.position, _sightRange);
         Gizmos.DrawRay(transform.position, Quaternion.Euler(0, _sightAngle / 2, 0) * transform.forward * _sightRange);
         Gizmos.DrawRay(transform.position, Quaternion.Euler(0, -_sightAngle / 2, 0) * transform.forward * _sightRange);
-    } // Draw Sight.
+    } // Draw Sight
 
 }

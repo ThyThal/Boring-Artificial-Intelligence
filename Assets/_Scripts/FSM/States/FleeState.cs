@@ -6,17 +6,17 @@ public class FleeState<T> : FSMState<T>
 {
     //Variables
     private Flee _flee;
-    private EnemyController _enemyController;
-    private Transform _target;
+    private EnemyController _myController;
+    private Transform _enemyTransform;
     private Rigidbody _rigidbody;
 
     //Constructor
-    public FleeState(EnemyController enemyController, Transform targetTransform, Rigidbody rigidbody)
+    public FleeState(EnemyController myController, Transform enemyTransform, Rigidbody rigidbody)
     {
-        _enemyController = enemyController;
-        _target = targetTransform;
+        _myController = myController;
+        _enemyTransform = enemyTransform;
         _rigidbody = rigidbody;
-        _flee = new Flee(_enemyController.transform, _target, _rigidbody, 0.5f);
+        _flee = new Flee(_myController.transform, _enemyTransform, _rigidbody, 0.5f);
     }
 
     //Sobreescribo la función Awake de la clase FSMState
@@ -28,7 +28,7 @@ public class FleeState<T> : FSMState<T>
     //Sobreescribo la funcion de Execute de la clase FSMState
     public override void Execute()
     {
-        _enemyController.Move(_flee.GetDirection());
+        _myController.Move(_flee.GetDirection());
     }
 
     //Sobreescribo la funcion de Sleep de la clase FSMState

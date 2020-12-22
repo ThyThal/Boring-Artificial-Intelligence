@@ -4,19 +4,22 @@ using UnityEngine;
 
 public class EnemyMovement : MonoBehaviour
 {
-    [SerializeField] public float _speed;
-    [SerializeField] public float _originalSpeed;
+    [SerializeField] public float speed;
+    [SerializeField] public float originalSpeed;
+    [SerializeField] public float safeDistanceToEnemy = 5f;
+    [SerializeField] public float safeDistanceToWaypoint = 1.3f;
+
     [SerializeField] private Rigidbody _rigidbody;
 
     private void Awake()
     {
-        _originalSpeed = _speed;
+        originalSpeed = speed;
         _rigidbody = GetComponent<Rigidbody>();
     }
 
     public void Move(Vector3 dir)
     {
-        var moveVelocity = dir * _speed;
+        var moveVelocity = dir * speed;
         _rigidbody.velocity = moveVelocity;
     }
 

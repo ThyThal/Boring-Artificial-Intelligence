@@ -4,12 +4,47 @@ using UnityEngine;
 
 public class EnemyController : MonoBehaviour
 {
+    [Header("Main Stats")]
+    [SerializeField] private bool _isBoss;
+    [SerializeField] public LayerMask enemyLayer;
+    [SerializeField] private float _maxHealth = 100f;
+    [SerializeField] private float _currentHealth;
+    [SerializeField] private bool _lowHealth = false;
+    
+
+    [Header("Saved Targets")]
+    [SerializeField] public Transform currentNode;
+    [SerializeField] public Transform currentEnemy;
+    [SerializeField] public Transform currentObstacle;
+
+    [Header("Attack Stats")]
+    [SerializeField] public float damage = 50f;
+    [SerializeField] public float attackDistace = 3f;
+
+    [Header("Line of Sight")]
+    [SerializeField] public LayerMask obstaclesLayer;
+    [SerializeField] public float obstacleRadius = 1.5f;
+
+    [Header("Cooldowns")]
+    [SerializeField] public float currentHealCooldown = 3f;
+    [SerializeField] public float currentAttackCooldown = 1f;
+    [SerializeField] private bool reachedWaypoint;
+
+    #region === Non Serialized Values ===
+    // General
+    private List<Node> _nodesList;
+
+    // My Components
+    public LineOfSight lineOfSight;
+    public EnemyMovement enemyMovement;
+    public LifeController lifeController;
+    private Rigidbody rigidbody;
+
     // Referencia al FSM.
-    [SerializeField] private FSM<string> _fsm;
-    [SerializeField] private SleepState<string> _sleepState;
-    [SerializeField] private FleeState<string> _fleeState;
-    [SerializeField] private INode _initTree;
-    [SerializeField] private bool isBoss;
+    private FSM<string> _fsm;
+    private SleepState<string> _sleepState;
+    private FleeState<string> _fleeState;
+    private INode _initTree;
 
     // Keys de los estados del FSM.
     private const string _idle = "idle";
@@ -18,52 +53,32 @@ public class EnemyController : MonoBehaviour
     private const string _pursuit = "pursuit";
     private const string _sleep = "sleep";
 
-    [Header("Health Stats")]
-    [SerializeField] private float maxHealth = 100f;
-    [SerializeField] private float currentHealth;
-    [SerializeField] private bool _lowHealth = false;
-    [SerializeField] private float _healCooldown;
-    [SerializeField] private float _ogHealCooldown;
+    // Original Values
+    public float originalAttackCooldown;
+    public float originalHealCooldown;
 
-    [Header("Attack Stats")]
-    [SerializeField] public float damage = 50f;
-    [SerializeField] public float distanceToTarget = 5;
-    [SerializeField] public float currentDistanceTarget;
-    [SerializeField] public float attackCooldown = 2f;
-    [SerializeField] public float ogAttackCooldown;
+    // Roulette Values
+    private Roulette<string> _roulette;
+    private Dictionary<string, int> _rouletteStates;
+    #endregion
 
-
-    // Target Variables.
-    [Header("Target Info")]
-    [SerializeField] public float currentWaypointDistance;
-    [SerializeField] private List<Node> _nodes;
-    [SerializeField] public Node targetNode;
-    [SerializeField] private bool reachedWaypoint;
-    [SerializeField] public float distanceToWaypoint;
-    [SerializeField] private Transform _targetEnemy;
-    [SerializeField] private bool _sawTarget;
-
-    // Componentes.
-    [Header("Componentes")]
-    [SerializeField] public LineOfSight lineOfSight;
-    [SerializeField] public LifeController lifeController;
-    [SerializeField] private EnemyMovement _enemyMovement;
-    [SerializeField] private Rigidbody _rigidbody;
-    [SerializeField] public LayerMask obstacleLayer;
-    [SerializeField] public float obstacleRadius = 1f;
-    [SerializeField] public float obstacleWeight = 1f;
-    [SerializeField] private Roulette<string> _roulette;
-    [SerializeField] private Dictionary<string, int> _rouletteStates;
 
     private void Awake()
     {
-        _ogHealCooldown = _healCooldown;
-        ogAttackCooldown = attackCooldown;
-        lifeController = new LifeController(maxHealth, Death);
-        currentHealth = lifeController.GetCurrentLife();
-        _rigidbody = GetComponent<Rigidbody>();
+        // Original Values
+        originalHealCooldown = currentHealCooldown;
+        originalAttackCooldown = currentAttackCooldown;
+        _nodesList = GameManager.Instance.nodesList;
+
+        // Components References
+        rigidbody = GetComponent<Rigidbody>(); 
         lineOfSight = GetComponent<LineOfSight>();
-        _enemyMovement = GetComponent<EnemyMovement>();
+        enemyMovement = GetComponent<EnemyMovement>();
+        lifeController = new LifeController(_maxHealth, Death);
+
+        // Set Max Health
+        _currentHealth = lifeController.GetCurrentLife();
+        lineOfSight.target = currentEnemy;
 
         CreateRoulette();
         InitFSM();
@@ -71,28 +86,28 @@ public class EnemyController : MonoBehaviour
     }
     private void Update()
     {
-        _healCooldown -= Time.deltaTime;
-        attackCooldown -= Time.deltaTime;
-        currentHealth = lifeController.GetCurrentLife();
-        _fsm.OnUpdate();        
+        // Timers
+        currentHealCooldown -= Time.deltaTime;
+        currentAttackCooldown -= Time.deltaTime;
+        Debug.Log(_fsm.GetCurrentState());
+        
+        _currentHealth = lifeController.GetCurrentLife(); // Update Life
+        _fsm.OnUpdate(); // Update FSM  
 
-        if (targetNode != null)
-        {
-            HasReachedWaypoint();
-        }
+        HasReachedWaypoint(); // Devolver si llegamos al nodo.
 
         if (lineOfSight.SawTarget())
         {
             GoToPursuit();
-        }
+        } // SAW TARGET
 
-        if (currentHealth <= 20)
+        if (_currentHealth <= 20)
         {
             _lowHealth = true;
             GoToRandomState();
-        }
+        } // LOW HEALTH
 
-        if (_lowHealth && currentHealth <= 40)
+        if (_lowHealth && _currentHealth <= 40) // LOW HEALTH AFTER
         {
             var currentState = _fsm.GetCurrentState();
             if (_fsm.GetCurrentState() == _fleeState)
@@ -100,7 +115,7 @@ public class EnemyController : MonoBehaviour
                 RegenerateLife();
             }
 
-            if (currentHealth >= 40)
+            if (_currentHealth >= 40)
             {
                 _lowHealth = false;
                 GoToIdle();
@@ -110,12 +125,12 @@ public class EnemyController : MonoBehaviour
 
     public void Move(Vector3 dir)
     {
-        _enemyMovement.Move(dir);
-    }
+        enemyMovement.Move(dir);
+    } // Move Direction
     public void Look(Vector3 position)
     {
-        _enemyMovement.Look(position);
-    }
+        enemyMovement.Look(position);
+    } // Look Direction
 
     // === FSM METHODS===
     #region === FSM METHODS===
@@ -126,9 +141,9 @@ public class EnemyController : MonoBehaviour
 
         // Crear los estados del FSM.
         IdleState<string> idleState = new IdleState<string>(this);
-        PursuitState<string> pursuitState = new PursuitState<string>(_targetEnemy, this);
-        SearchState<string> searchState = new SearchState<string>(_nodes, transform, obstacleLayer, this, _targetEnemy);
-        _fleeState = new FleeState<string>(this, _targetEnemy, _rigidbody);
+        PursuitState<string> pursuitState = new PursuitState<string>(currentEnemy, this);
+        SearchState<string> searchState = new SearchState<string>(_nodesList, transform, obstaclesLayer, this, currentEnemy);
+        _fleeState = new FleeState<string>(this, currentEnemy, rigidbody);
         _sleepState = new SleepState<string>(this);
 
         idleState.AddTransition(_sleep, _sleepState);
@@ -204,12 +219,21 @@ public class EnemyController : MonoBehaviour
 
     private bool HasReachedWaypoint()
     {
-        var dist = (targetNode.transform.position - transform.position).magnitude;
-        if (dist <= distanceToWaypoint)
+        if (currentNode != null)
         {
-            reachedWaypoint = true;
-            GoToIdle();
-            return  true;
+            var dist = (currentNode.position - transform.position).magnitude;
+            if (dist <= enemyMovement.safeDistanceToWaypoint)
+            {
+                GoToIdle();
+                reachedWaypoint = true;
+                return true;
+            }
+
+            else
+            {
+                reachedWaypoint = false;
+                return false;
+            }            
         }
 
         else
@@ -239,9 +263,9 @@ public class EnemyController : MonoBehaviour
 
     private void RegenerateLife()
     {
-        if (_healCooldown <= 0)
+        if (currentHealCooldown <= 0)
         {
-            _healCooldown = _ogHealCooldown;
+            currentHealCooldown = originalHealCooldown;
             lifeController.GetHeal(5);
         }
     }
