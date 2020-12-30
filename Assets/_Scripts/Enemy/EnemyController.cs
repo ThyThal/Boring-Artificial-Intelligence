@@ -39,6 +39,7 @@ public class EnemyController : MonoBehaviour
     public EnemyMovement enemyMovement;
     public LifeController lifeController;
     private Rigidbody rigidbody;
+    private GameManager _gameManager;
 
     // Referencia al FSM.
     private FSM<string> _fsm;
@@ -68,8 +69,15 @@ public class EnemyController : MonoBehaviour
         // Original Values
         originalHealCooldown = currentHealCooldown;
         originalAttackCooldown = currentAttackCooldown;
-        _nodesList = GameManager.Instance.nodesList;
 
+        var gameman = GameObject.FindGameObjectWithTag("GameManager");
+
+        while (_gameManager == null)
+        {
+            _gameManager = gameman.GetComponent<GameManager>();
+        }
+
+        _nodesList = _gameManager.nodesList;
         // Components References
         rigidbody = GetComponent<Rigidbody>(); 
         lineOfSight = GetComponent<LineOfSight>();

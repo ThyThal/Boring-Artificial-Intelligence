@@ -5,7 +5,7 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     [SerializeField] public List<Node> nodesList;
-    public static GameManager Instance;
+    [SerializeField] public static GameManager Instance;
     private void Awake()
     {
         if (Instance == null)
@@ -13,6 +13,7 @@ public class GameManager : MonoBehaviour
             Instance = this;
             DontDestroyOnLoad(this);
         }
+
         else
         {
             Destroy(gameObject);
