@@ -18,10 +18,9 @@ public class LifeController
 
     public void GetDamage(float damage)
     {
-        _currentHealth -= damage;
-        
+        _currentHealth -= damage;      
 
-        if (_currentHealth == 0) _deathDelegate.Invoke();
+        if (_currentHealth <= 0) _deathDelegate.Invoke();
     }
 
     public void GetHeal(float heal)

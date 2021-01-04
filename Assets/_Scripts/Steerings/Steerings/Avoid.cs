@@ -11,9 +11,9 @@ public class Avoid : ISteeringBehaviour
     [SerializeField] private float _obstacleRadius;
     [SerializeField] private float _obstacleWeight;
 
-    public Avoid(Transform transform, LayerMask obstacleLayer, float obstacleRadius, float obstacleWeight)
+    public Avoid(Transform myTransform, LayerMask obstacleLayer, float obstacleRadius, float obstacleWeight)
     {
-        _myTransform = transform;
+        _myTransform = myTransform;
         _obstacleLayer = obstacleLayer;
         _obstacleRadius = obstacleRadius;
         _obstacleWeight = obstacleWeight;

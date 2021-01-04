@@ -9,8 +9,7 @@ public class EnemyController : MonoBehaviour
     [SerializeField] public LayerMask enemyLayer;
     [SerializeField] private float _maxHealth = 100f;
     [SerializeField] private float _currentHealth;
-    [SerializeField] private bool _lowHealth = false;
-    
+    [SerializeField] private bool _lowHealth = false;    
 
     [Header("Saved Targets")]
     [SerializeField] public Transform currentNode;
@@ -23,7 +22,8 @@ public class EnemyController : MonoBehaviour
 
     [Header("Line of Sight")]
     [SerializeField] public LayerMask obstaclesLayer;
-    [SerializeField] public float obstacleRadius = 1.5f;
+    [SerializeField] public float obstacleRadius = 2.5f;
+    [SerializeField] public float obstacleWeight = 1f;
 
     [Header("Cooldowns")]
     [SerializeField] public float currentHealCooldown = 3f;
@@ -97,6 +97,7 @@ public class EnemyController : MonoBehaviour
         // Timers
         currentHealCooldown -= Time.deltaTime;
         currentAttackCooldown -= Time.deltaTime;
+
         Debug.Log(_fsm.GetCurrentState());
         
         _currentHealth = lifeController.GetCurrentLife(); // Update Life
@@ -264,7 +265,6 @@ public class EnemyController : MonoBehaviour
     string ExecuteRoulette()
     {
         var a = _roulette.Run(_rouletteStates);
-        Debug.Log(a);
         return a;
     }
     #endregion === ROULETTE ===

@@ -11,18 +11,18 @@ public class SearchState<T> : FSMState<T>
     [SerializeField] private Node _closestNode;
     [SerializeField] private Node _destiny;
     [SerializeField] private int _pointer;
-    [SerializeField] private EnemyController _enemyController;
+    [SerializeField] private EnemyController _myEnemyController;
     [SerializeField] private Avoid _avoid;
 
     Theta<Node> _theta = new Theta<Node>();
 
-    public SearchState(List<Node> nodes, Transform transform, LayerMask obstacles, EnemyController enemyController, Transform targetTransform)
+    public SearchState(List<Node> nodes, Transform transform, LayerMask obstacles, EnemyController myEnemyController, Transform targetTransform)
     {
         _nodes = nodes;
         _transform = transform;
         _obstacles = obstacles;
-        _enemyController = enemyController;
-        _avoid = new Avoid(_enemyController.transform, _obstacles, 2.5f, 1f);
+        _myEnemyController = myEnemyController;
+        _avoid = new Avoid(_myEnemyController.transform, _obstacles, _myEnemyController.obstacleRadius, _myEnemyController.obstacleWeight);
     }
 
     public override void Awake()
@@ -31,7 +31,8 @@ public class SearchState<T> : FSMState<T>
         _pointer = 0;
         _closestNode = FindNearestNode();
         _destiny = GetRandomNode();
-        _enemyController.currentNode = _destiny.transform;
+        _myEnemyController.currentNode = _destiny.transform;
+        _avoid.SetTarget(_myEnemyController.currentNode);
         _path = _theta.Run(_closestNode, Satisfies, GetNeighbours, GetCost, Heuristic);
     }
 
@@ -40,14 +41,14 @@ public class SearchState<T> : FSMState<T>
         if (_pointer < _path.Count)
         {
             _avoid.SetTarget(_path[_pointer].transform);
-            _enemyController.Move(_avoid.GetDirection());
-            _enemyController.Look(_path[_pointer].transform.position);
+            _myEnemyController.Move(_avoid.GetDirection());
+            _myEnemyController.Look(_path[_pointer].transform.position);
 
             Vector3 target = _path[_pointer].transform.position;
             Vector3 difference = target - _transform.transform.position;
             var waypointDistace = difference.magnitude;
 
-            if (waypointDistace <= _enemyController.enemyMovement.safeDistanceToWaypoint) // Reached Waypoint
+            if (waypointDistace <= _myEnemyController.enemyMovement.safeDistanceToWaypoint) // Reached Waypoint
             {
                 _pointer++;
             }
@@ -55,7 +56,7 @@ public class SearchState<T> : FSMState<T>
 
         else
         {
-            _enemyController.ExecuteTreeFromSleep();
+            _myEnemyController.ExecuteTreeFromSleep();
         }
     }
 
@@ -114,7 +115,7 @@ public class SearchState<T> : FSMState<T>
         _pointer = 0;
         _closestNode = FindNearestNode();
         _destiny = GetRandomNode();
-        _enemyController.currentNode = _destiny.transform;
+        _myEnemyController.currentNode = _destiny.transform;
         _path = _theta.Run(_closestNode, Satisfies, GetNeighbours, GetCost, Heuristic);
     }
 }

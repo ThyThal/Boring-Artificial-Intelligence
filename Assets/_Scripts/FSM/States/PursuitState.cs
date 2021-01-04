@@ -19,13 +19,13 @@ public class PursuitState<T> : FSMState<T>
         _myController = myController;
         _myTransform = _myController.transform;
         _enemyRigidbody = enemyTransform.GetComponent<Rigidbody>();
-        _pursuit = new Pursuit(_myTransform, _enemyTransform, _enemyRigidbody, 0.5f);
-        _avoid = new Avoid(_myTransform, _myController.obstaclesLayer, _myController.obstacleRadius, 1f);
+        //_pursuit = new Pursuit(_myTransform, _enemyTransform, _enemyRigidbody, 0.5f);
+        _avoid = new Avoid(_myTransform, _myController.obstaclesLayer, _myController.obstacleRadius, _myController.obstacleWeight);
     }
 
     public override void Awake()
     {
-
+        _avoid.SetTarget(_enemyTransform);
     }
 
     public override void Sleep()
@@ -46,8 +46,7 @@ public class PursuitState<T> : FSMState<T>
 
             if (currentDistance > 8)
             {
-                Vector3 positionDestination = _pursuit.GetDirection();
-                _myController.Move(positionDestination);
+                _myController.Move(_avoid.GetDirection());
                 _myController.Look(_enemyTransform.position);
             }
         }
