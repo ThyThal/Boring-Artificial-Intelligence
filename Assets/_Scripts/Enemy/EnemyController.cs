@@ -42,7 +42,7 @@ public class EnemyController : MonoBehaviour
     private GameManager _gameManager;
 
     // Referencia al FSM.
-    private FSM<string> _fsm;
+    public FSM<string> fsm;
     private SleepState<string> _sleepState;
     private FleeState<string> _fleeState;
     private INode _initTree;
@@ -97,11 +97,9 @@ public class EnemyController : MonoBehaviour
         // Timers
         currentHealCooldown -= Time.deltaTime;
         currentAttackCooldown -= Time.deltaTime;
-
-        Debug.Log(_fsm.GetCurrentState());
         
         _currentHealth = lifeController.GetCurrentLife(); // Update Life
-        _fsm.OnUpdate(); // Update FSM  
+        fsm.OnUpdate(); // Update FSM  
 
         HasReachedWaypoint(); // Devolver si llegamos al nodo.
 
@@ -118,8 +116,8 @@ public class EnemyController : MonoBehaviour
 
         if (_lowHealth && _currentHealth <= 40) // LOW HEALTH AFTER
         {
-            var currentState = _fsm.GetCurrentState();
-            if (_fsm.GetCurrentState() == _fleeState)
+            var currentState = fsm.GetCurrentState();
+            if (fsm.GetCurrentState() == _fleeState)
             {
                 RegenerateLife();
             }
@@ -146,7 +144,7 @@ public class EnemyController : MonoBehaviour
     private void InitFSM()
     {
         // Inicializar FSM.
-        _fsm = new FSM<string>();
+        fsm = new FSM<string>();
 
         // Crear los estados del FSM.
         IdleState<string> idleState = new IdleState<string>(this);
@@ -184,13 +182,13 @@ public class EnemyController : MonoBehaviour
 
 
         // Asignar un valor inicial.
-        _fsm.SetInitState(idleState);
+        fsm.SetInitState(idleState);
     }
-    private void GoToPursuit() {_fsm.Transition(_pursuit); }
-    private void GoToFlee() { _fsm.Transition(_flee); }
-    private void GoToIdle() {_fsm.Transition(_idle); }
-    private void GoToSearchState() {_fsm.Transition(_search); }
-    private void GoToRandomState() {_fsm.Transition(ExecuteRoulette()); }
+    private void GoToPursuit() {fsm.Transition(_pursuit); }
+    private void GoToFlee() { fsm.Transition(_flee); }
+    private void GoToIdle() {fsm.Transition(_idle); }
+    private void GoToSearchState() {fsm.Transition(_search); }
+    private void GoToRandomState() {fsm.Transition(ExecuteRoulette()); }
 
     #endregion  === FSM METHODS===
 
@@ -198,7 +196,7 @@ public class EnemyController : MonoBehaviour
     #region  === BINARY TREE METHODS ===
     public void ExecuteBinaryTree()
     {
-        if (_fsm.GetCurrentState() == _sleepState)
+        if (fsm.GetCurrentState() == _sleepState)
         {
             return;
         }
