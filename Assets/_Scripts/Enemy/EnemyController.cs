@@ -53,6 +53,7 @@ public class EnemyController : MonoBehaviour
     private const string _flee = "flee";
     private const string _pursuit = "pursuit";
     private const string _sleep = "sleep";
+    private const string _flock = "flock";
 
     // Original Values
     public float originalAttackCooldown;
@@ -148,6 +149,7 @@ public class EnemyController : MonoBehaviour
 
         // Crear los estados del FSM.
         IdleState<string> idleState = new IdleState<string>(this);
+        FlockState<string> flockState = new FlockState<string>(this);
         PursuitState<string> pursuitState = new PursuitState<string>(currentEnemy, this);
         SearchState<string> searchState = new SearchState<string>(_nodesList, transform, obstaclesLayer, this, currentEnemy);
         _fleeState = new FleeState<string>(this, currentEnemy, rigidbody);
@@ -157,6 +159,7 @@ public class EnemyController : MonoBehaviour
         idleState.AddTransition(_search, searchState);
         idleState.AddTransition(_pursuit, pursuitState);
         idleState.AddTransition(_flee, _fleeState);
+        idleState.AddTransition(_flock, flockState);
 
         searchState.AddTransition(_sleep, _sleepState);
         searchState.AddTransition(_idle, idleState);
@@ -174,11 +177,19 @@ public class EnemyController : MonoBehaviour
         pursuitState.AddTransition(_search, searchState);
         pursuitState.AddTransition(_idle, idleState);
         pursuitState.AddTransition(_flee, _fleeState);
+        pursuitState.AddTransition(_flock, flockState);
 
         _sleepState.AddTransition(_idle, idleState);
         _sleepState.AddTransition(_search, searchState);
         _sleepState.AddTransition(_pursuit, pursuitState);
         _sleepState.AddTransition(_flee, _fleeState);
+        _sleepState.AddTransition(_flock, flockState);
+
+        // Flocking Transition
+        flockState.AddTransition(_idle, idleState);
+        flockState.AddTransition(_pursuit, pursuitState);
+        flockState.AddTransition(_flee, _fleeState);
+        flockState.AddTransition(_sleep, _sleepState); 
 
 
         // Asignar un valor inicial.

@@ -14,7 +14,7 @@ public class SearchState<T> : FSMState<T>
     [SerializeField] private EnemyController _myEnemyController;
     [SerializeField] private Avoid _avoid;
 
-    Theta<Node> _theta = new Theta<Node>();
+    AStar<Node> _theta = new AStar<Node>();
 
     public SearchState(List<Node> nodes, Transform transform, LayerMask obstacles, EnemyController myEnemyController, Transform targetTransform)
     {

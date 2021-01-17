@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Theta<T>
+public class AStar<T>
 {
     public delegate List<T> GetNeighbours(T current);
     public delegate bool Satisfies(T current);

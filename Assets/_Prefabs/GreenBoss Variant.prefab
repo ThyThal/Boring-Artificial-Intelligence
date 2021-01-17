@@ -17,7 +17,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 124125255, guid: 0691a3241778f2349af8e8fa114751fa, type: 3}
       propertyPath: _sightRange
-      value: 20
+      value: 25
       objectReference: {fileID: 0}
     - target: {fileID: 124125255, guid: 0691a3241778f2349af8e8fa114751fa, type: 3}
       propertyPath: _layerMask.m_Bits
@@ -30,6 +30,10 @@ PrefabInstance:
     - target: {fileID: 124125255, guid: 0691a3241778f2349af8e8fa114751fa, type: 3}
       propertyPath: _obstaclesLayer.m_Bits
       value: 256
+      objectReference: {fileID: 0}
+    - target: {fileID: 124125256, guid: 0691a3241778f2349af8e8fa114751fa, type: 3}
+      propertyPath: speed
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 124125256, guid: 0691a3241778f2349af8e8fa114751fa, type: 3}
       propertyPath: _speed
@@ -80,6 +84,10 @@ PrefabInstance:
       value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 124125257, guid: 0691a3241778f2349af8e8fa114751fa, type: 3}
+      propertyPath: _isBoss
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 124125257, guid: 0691a3241778f2349af8e8fa114751fa, type: 3}
       propertyPath: lineOfSight
       value: 
       objectReference: {fileID: 7541550623668501572}
@@ -93,11 +101,11 @@ PrefabInstance:
       objectReference: {fileID: 7541550623668501579}
     - target: {fileID: 124125257, guid: 0691a3241778f2349af8e8fa114751fa, type: 3}
       propertyPath: obstacleRadius
-      value: 1
+      value: 2.5
       objectReference: {fileID: 0}
     - target: {fileID: 124125257, guid: 0691a3241778f2349af8e8fa114751fa, type: 3}
       propertyPath: obstacleWeight
-      value: 1.5
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 124125257, guid: 0691a3241778f2349af8e8fa114751fa, type: 3}
       propertyPath: _nodes.Array.size
@@ -113,6 +121,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 124125257, guid: 0691a3241778f2349af8e8fa114751fa, type: 3}
       propertyPath: obstacleLayer.m_Bits
+      value: 256
+      objectReference: {fileID: 0}
+    - target: {fileID: 124125257, guid: 0691a3241778f2349af8e8fa114751fa, type: 3}
+      propertyPath: obstaclesLayer.m_Bits
       value: 256
       objectReference: {fileID: 0}
     - target: {fileID: 2484275711389164551, guid: 0691a3241778f2349af8e8fa114751fa,
@@ -148,7 +160,7 @@ PrefabInstance:
     - target: {fileID: 2484275711389164570, guid: 0691a3241778f2349af8e8fa114751fa,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2484275711389164570, guid: 0691a3241778f2349af8e8fa114751fa,
         type: 3}
@@ -193,7 +205,7 @@ PrefabInstance:
     - target: {fileID: 2484275711389164571, guid: 0691a3241778f2349af8e8fa114751fa,
         type: 3}
       propertyPath: m_Name
-      value: GreenBoss
+      value: GreenBoss Variant
       objectReference: {fileID: 0}
     - target: {fileID: 2484275711389164571, guid: 0691a3241778f2349af8e8fa114751fa,
         type: 3}
