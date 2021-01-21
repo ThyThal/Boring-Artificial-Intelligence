@@ -4499,7 +4499,7 @@ PrefabInstance:
         type: 3}
       propertyPath: currentEnemy
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 789250697}
     - target: {fileID: 7541550623668501578, guid: f7e948972b82cfd4fad0cd726dd1b8c4,
         type: 3}
       propertyPath: obstacleWeight
@@ -4743,6 +4743,6 @@ PrefabInstance:
         type: 3}
       propertyPath: currentEnemy
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 389571185}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8442fa0b43f0f3f47a3b9d08715b7ed2, type: 3}

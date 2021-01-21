@@ -4,5 +4,5 @@ using UnityEngine;
 
 public abstract class FlockingBehavior : MonoBehaviour
 {
-    public abstract Vector3 GetDirection();
+    public abstract Vector3 GetDirection(List<Transform> context);
 }
