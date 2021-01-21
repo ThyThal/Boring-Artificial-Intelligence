@@ -4,18 +4,21 @@ using UnityEngine;
 
 public class IdleState<T> : FSMState<T>
 {
+    private FSM<MinionController.States> _fsm;
     [SerializeField] private float _timer;
     [SerializeField] private EnemyController _enemyController;
+    [SerializeField] private MinionController _minionController;
 
     public IdleState(EnemyController enemyController)
     {
         _enemyController = enemyController;
     } // Constructor del Estado.
 
-    public override void Awake()
+    public IdleState(MinionController minionController)
     {
-        _timer = Random.Range(1, 3);
-    } // Sobreescribir Awake.
+        _fsm = minionController.fsm;
+        _minionController = minionController;
+    } // Constructor del Estado.
 
     public override void Execute()
     {
@@ -26,7 +29,18 @@ public class IdleState<T> : FSMState<T>
 
         else
         {
-            _enemyController.ExecuteBinaryTree();
+            _minionController.fsm.Transition(MinionController.States.FLOCKING);
         }
+    }
+
+    public override void Awake()
+    {
+        Debug.Log("Idle State Awake");
+        _timer = Random.Range(1, 3);
+    }
+
+    public override void Sleep()
+    {
+        Debug.Log("Idle State Sleep");
     }
 }

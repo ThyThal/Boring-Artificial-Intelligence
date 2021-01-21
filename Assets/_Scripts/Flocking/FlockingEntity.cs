@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class FlockingEntity : MonoBehaviour
 {
-    private float _flockRadius = 5f;
-    private Vector3 _direction;
-    private LayerMask _alliesLayer;
-    private Collider _myCollider;
-    private FlockingBehavior[] _flockingBehaviors;
+    [SerializeField] private float _flockRadius = 5f;
+    [SerializeField] private Vector3 _direction;
+    [SerializeField] private LayerMask _alliesLayer;
+    [SerializeField] private Collider _myCollider;
+    [SerializeField] private FlockingBehavior[] _flockingBehaviors;
 
     private void Awake()
     {
@@ -40,7 +40,7 @@ public class FlockingEntity : MonoBehaviour
         return context;
     }
 
-    private Vector3 UpdateDirection()
+    public Vector3 UpdateDirection()
     {
         Vector3 direction = Vector3.zero;
         List<Transform> context = this.GetNearbyEntities();
