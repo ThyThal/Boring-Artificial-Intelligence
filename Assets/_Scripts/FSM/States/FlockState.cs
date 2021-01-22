@@ -7,9 +7,9 @@ public class FlockState<T> : FSMState<T>
     private MinionController _minionController;
     private FlockingEntity _flockingEntity;
 
-    public FlockState(MinionController minionController, FlockingEntity flockingEntity)
+    public FlockState(FSM<MinionController.States> fsm, MinionController minionController, FlockingEntity flockingEntity)
     {
-        _fsm = minionController.fsm;
+        _fsm = fsm;
         _minionController = minionController;
         _flockingEntity = flockingEntity;
 
@@ -25,7 +25,7 @@ public class FlockState<T> : FSMState<T>
         // If there is none, idle.
         if (context.Count == 0)
         {
-            _minionController.fsm.Transition(MinionController.States.IDLE); 
+            _fsm.Transition(MinionController.States.IDLE); 
         }
 
         // If there are allies, flock.

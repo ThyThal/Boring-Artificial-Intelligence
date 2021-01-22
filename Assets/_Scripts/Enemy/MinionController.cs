@@ -23,7 +23,7 @@ public class MinionController : MonoBehaviour
     [SerializeField] private LineOfSight _lineOfSight;
     [SerializeField] private LifeController _lifeController;
 
-    public FSM<States> fsm;
+    public FSM<States> _fsm;
 
     protected virtual void Awake()
     {
@@ -37,35 +37,21 @@ public class MinionController : MonoBehaviour
 
     protected virtual void Update()
     {
-        fsm.OnUpdate();
+        _fsm.OnUpdate();
     }
 
     private void InitializeFSM()
     {
         // Create Minion FSM.
-        fsm = new FSM<States>();
+        _fsm = new FSM<States>();
+        IdleState<States> idleState = new IdleState<States>(_fsm, this, _flockingEntity);
+        FlockState<States> flockState = new FlockState<States>(_fsm, this, _flockingEntity);
 
-        FlockState<States> flockState = new FlockState<States>(this, _flockingEntity);
-        //SearchState<States> searchState = new SearchState<States>();
-        //PursuitState<States> pursuitState = new PursuitState<States>();
-        IdleState<States> idleState = new IdleState<States>(this);
+        // Transitions.
+        flockState.AddTransition(States.IDLE, idleState);
+        idleState.AddTransition(States.FLOCKING, flockState);
 
-        // [MINIONS] Flocking Transitions.
-        flockState.AddTransition(States.FLOCKING, idleState);
-
-        // [BOSS] Searching Transitions.
-        //searchState.AddTransition(States.SEARCHING, idleState);
-
-        // [EVERYONE] Pursuit Transitions.
-        //pursuitState.AddTransition(States.PURSUIT, idleState);
-
-        // [EVERYONE] Idle Transitions.
-        idleState.AddTransition(States.IDLE, flockState);
-        //idleState.AddTransition(States.IDLE, searchState);
-        //idleState.AddTransition(States.IDLE, pursuitState);
-
-
-        fsm.SetInitState(idleState);
+        _fsm.SetInitState(idleState);
     }
 
     public void ExecuteBinaryTree()

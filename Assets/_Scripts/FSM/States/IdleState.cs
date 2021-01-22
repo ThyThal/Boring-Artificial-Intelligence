@@ -5,19 +5,23 @@ using UnityEngine;
 public class IdleState<T> : FSMState<T>
 {
     private FSM<MinionController.States> _fsm;
-    [SerializeField] private float _timer;
-    [SerializeField] private EnemyController _enemyController;
     [SerializeField] private MinionController _minionController;
+    [SerializeField] private FlockingEntity _flockingEntity;
+    [SerializeField] private float _timer;
+
+
+    [SerializeField] private EnemyController _enemyController;
 
     public IdleState(EnemyController enemyController)
     {
         _enemyController = enemyController;
     } // Constructor del Estado.
 
-    public IdleState(MinionController minionController)
+    public IdleState(FSM<MinionController.States> fsm, MinionController minionController, FlockingEntity flockingEntity)
     {
-        _fsm = minionController.fsm;
+        _fsm = fsm;
         _minionController = minionController;
+        _flockingEntity = flockingEntity;
     } // Constructor del Estado.
 
     public override void Execute()
@@ -29,7 +33,7 @@ public class IdleState<T> : FSMState<T>
 
         else
         {
-            _minionController.fsm.Transition(MinionController.States.FLOCKING);
+            _fsm.Transition(MinionController.States.FLOCKING);
         }
     }
 
