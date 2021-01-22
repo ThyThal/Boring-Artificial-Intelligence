@@ -15,6 +15,8 @@ public class MinionController : MonoBehaviour
 
     [Header("Main Stats")]
     [SerializeField] public bool isBoss;
+    [SerializeField] private bool isGreen;
+    [SerializeField] public GameObject[] minionsList;
     [SerializeField] private float _maxHealth = 100f;
     [SerializeField] private float _speed = 2f;
 
@@ -34,10 +36,12 @@ public class MinionController : MonoBehaviour
     [SerializeField] private LifeController _lifeController;
 
     public FSM<States> _fsm;
+    
 
     protected virtual void Awake()
     {
-
+        if (isGreen) { minionsList = GameObject.FindGameObjectsWithTag("GreenEnemy"); }
+        else { minionsList = GameObject.FindGameObjectsWithTag("GreenEnemy"); }
     }
 
     protected virtual void Start()

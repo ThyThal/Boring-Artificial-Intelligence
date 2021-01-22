@@ -498,21 +498,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 3427298727439324472, guid: d33e4b67fe1753e47be03aa7d152f875,
-        type: 3}
-      propertyPath: m_Constraints
-      value: 80
-      objectReference: {fileID: 0}
-    - target: {fileID: 3829025456904151348, guid: d33e4b67fe1753e47be03aa7d152f875,
-        type: 3}
-      propertyPath: _personalSpaceRadius
-      value: 20
-      objectReference: {fileID: 0}
-    - target: {fileID: 4515723426328506873, guid: d33e4b67fe1753e47be03aa7d152f875,
-        type: 3}
-      propertyPath: _flockRadius
-      value: 20
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d33e4b67fe1753e47be03aa7d152f875, type: 3}
 --- !u!4 &306403698 stripped
@@ -3163,21 +3148,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 3427298727439324472, guid: d33e4b67fe1753e47be03aa7d152f875,
-        type: 3}
-      propertyPath: m_Constraints
-      value: 80
-      objectReference: {fileID: 0}
-    - target: {fileID: 3829025456904151348, guid: d33e4b67fe1753e47be03aa7d152f875,
-        type: 3}
-      propertyPath: _personalSpaceRadius
-      value: 20
-      objectReference: {fileID: 0}
-    - target: {fileID: 4515723426328506873, guid: d33e4b67fe1753e47be03aa7d152f875,
-        type: 3}
-      propertyPath: _flockRadius
-      value: 20
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d33e4b67fe1753e47be03aa7d152f875, type: 3}
 --- !u!4 &1917899514 stripped
@@ -3369,21 +3339,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 3427298727439324472, guid: d33e4b67fe1753e47be03aa7d152f875,
-        type: 3}
-      propertyPath: m_Constraints
-      value: 80
-      objectReference: {fileID: 0}
-    - target: {fileID: 3829025456904151348, guid: d33e4b67fe1753e47be03aa7d152f875,
-        type: 3}
-      propertyPath: _personalSpaceRadius
-      value: 20
-      objectReference: {fileID: 0}
-    - target: {fileID: 4515723426328506873, guid: d33e4b67fe1753e47be03aa7d152f875,
-        type: 3}
-      propertyPath: _flockRadius
-      value: 20
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d33e4b67fe1753e47be03aa7d152f875, type: 3}
 --- !u!4 &2044145912 stripped
@@ -3548,6 +3503,41 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2036444586}
     m_Modifications:
+    - target: {fileID: 4872464024693853602, guid: e825131e7d224cd4f92e3691ca9b57af,
+        type: 3}
+      propertyPath: isBoss
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4872464024693853602, guid: e825131e7d224cd4f92e3691ca9b57af,
+        type: 3}
+      propertyPath: obstacleRadius
+      value: 1.7
+      objectReference: {fileID: 0}
+    - target: {fileID: 4872464024693853602, guid: e825131e7d224cd4f92e3691ca9b57af,
+        type: 3}
+      propertyPath: minionsList.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4872464024693853602, guid: e825131e7d224cd4f92e3691ca9b57af,
+        type: 3}
+      propertyPath: minionsList.Array.data[0]
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 4872464024693853602, guid: e825131e7d224cd4f92e3691ca9b57af,
+        type: 3}
+      propertyPath: minionsList.Array.data[1]
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 4872464024693853602, guid: e825131e7d224cd4f92e3691ca9b57af,
+        type: 3}
+      propertyPath: minionsList.Array.data[2]
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 4872464024693853602, guid: e825131e7d224cd4f92e3691ca9b57af,
+        type: 3}
+      propertyPath: minionsList.Array.data[3]
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 7461738906809613658, guid: e825131e7d224cd4f92e3691ca9b57af,
         type: 3}
       propertyPath: m_RootOrder
@@ -3607,6 +3597,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Green BOSS
+      objectReference: {fileID: 0}
+    - target: {fileID: 8043044677252294587, guid: e825131e7d224cd4f92e3691ca9b57af,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8262658404372341360, guid: e825131e7d224cd4f92e3691ca9b57af,
+        type: 3}
+      propertyPath: safeDistanceToWaypoint
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e825131e7d224cd4f92e3691ca9b57af, type: 3}
@@ -3772,6 +3772,46 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6769278091436780864, guid: 365379825a8c8e74cb5675c7bf232c15,
+        type: 3}
+      propertyPath: safeDistanceToWaypoint
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7837928778886103698, guid: 365379825a8c8e74cb5675c7bf232c15,
+        type: 3}
+      propertyPath: isBoss
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7837928778886103698, guid: 365379825a8c8e74cb5675c7bf232c15,
+        type: 3}
+      propertyPath: obstacleRadius
+      value: 1.7
+      objectReference: {fileID: 0}
+    - target: {fileID: 7837928778886103698, guid: 365379825a8c8e74cb5675c7bf232c15,
+        type: 3}
+      propertyPath: minionsList.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7837928778886103698, guid: 365379825a8c8e74cb5675c7bf232c15,
+        type: 3}
+      propertyPath: minionsList.Array.data[0]
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 7837928778886103698, guid: 365379825a8c8e74cb5675c7bf232c15,
+        type: 3}
+      propertyPath: minionsList.Array.data[1]
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 7837928778886103698, guid: 365379825a8c8e74cb5675c7bf232c15,
+        type: 3}
+      propertyPath: minionsList.Array.data[2]
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 7837928778886103698, guid: 365379825a8c8e74cb5675c7bf232c15,
+        type: 3}
+      propertyPath: minionsList.Array.data[3]
+      value: 
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 365379825a8c8e74cb5675c7bf232c15, type: 3}
 --- !u!1001 &6331818415432741103
@@ -3785,6 +3825,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Green Minion (0)
+      objectReference: {fileID: 0}
+    - target: {fileID: 140955750985533966, guid: d33e4b67fe1753e47be03aa7d152f875,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 713547893959266543, guid: d33e4b67fe1753e47be03aa7d152f875,
         type: 3}

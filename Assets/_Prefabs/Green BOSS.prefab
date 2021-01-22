@@ -23,7 +23,7 @@ GameObject:
   - component: {fileID: 8262658404372341360}
   m_Layer: 10
   m_Name: Green BOSS
-  m_TagString: Enemy
+  m_TagString: GreenEnemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -131,6 +131,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isBoss: 1
+  minionsList:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   _maxHealth: 100
   _speed: 5
   currentNode: {fileID: 0}

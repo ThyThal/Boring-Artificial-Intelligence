@@ -22,7 +22,7 @@ GameObject:
   - component: {fileID: 1636947824232867364}
   m_Layer: 9
   m_Name: Orange Minion (0)
-  m_TagString: Enemy
+  m_TagString: OrangeEnemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -131,6 +131,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isBoss: 0
+  minionsList: []
   _maxHealth: 100
   _speed: 5
   currentNode: {fileID: 0}

@@ -9,6 +9,7 @@ public class SearchState<T> : FSMState<T>
     private MinionController _minionController;
 
     // Extra Variables.
+    private GameObject[] _minionsList;
     private int _pointer;
     private Transform _transform;
     private List<Node> _path;
@@ -25,6 +26,7 @@ public class SearchState<T> : FSMState<T>
         _minionController = minionController;
         _transform = minionController.transform;
         _nodes = GameManager.Instance.nodesList;
+        _minionsList = minionController.minionsList;
 
         if (minionController.isBoss == true)
         {
@@ -34,11 +36,11 @@ public class SearchState<T> : FSMState<T>
 
     public override void Awake()
     {
-        if (_minionController.isBoss == false) { return; }
         Debug.Log("Search State Awake");
-        _pointer = 0; // Reset Pointer.
+        if (_minionController.isBoss == false) { return; }
         _closestNode = FindNearestNode();
         _destinyNode = GetRandomNode();
+        _pointer = 0; // Reset Pointer.
         _avoid.SetTarget(_minionController.currentNode);
         _path = _aStar.Run(_closestNode, Satisfies, GetNeighbours, GetCost, Heuristic);
     }
@@ -63,7 +65,11 @@ public class SearchState<T> : FSMState<T>
 
         else
         {
-            _fsm.Transition(MinionController.States.IDLE);
+            foreach (var minion in _minionsList)
+            {
+                minion.GetComponent<MinionController>()._fsm.Transition(MinionController.States.IDLE);
+                _pointer = 0;
+            }
         }
     }
 

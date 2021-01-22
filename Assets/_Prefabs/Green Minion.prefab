@@ -22,7 +22,7 @@ GameObject:
   - component: {fileID: 275259974484920126}
   m_Layer: 10
   m_Name: Green Minion
-  m_TagString: Enemy
+  m_TagString: GreenEnemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -131,6 +131,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isBoss: 0
+  minionsList: []
   _maxHealth: 100
   _speed: 5
   currentNode: {fileID: 0}
@@ -153,7 +154,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dbfe546429cb3194f89a91e0508255ac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _flockRadius: 5
+  _flockRadius: 20
   _direction: {x: 0, y: 0, z: 0}
   _alliesLayer:
     serializedVersion: 2
@@ -207,7 +208,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9f4873321e9aae2449d476bb7966233e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _personalSpaceRadius: 3
+  _personalSpaceRadius: 20
 --- !u!114 &7179553873778759595
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -220,7 +221,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1249e45b71f63d348b9b47cc246b7beb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  centerOfMassSphere: {fileID: 6889439245248335690}
 --- !u!114 &275259974484920126
 MonoBehaviour:
   m_ObjectHideFlags: 0
