@@ -6,13 +6,14 @@ public class FlockState<T> : FSMState<T>
     private FSM<MinionController.States> _fsm;
     private MinionController _minionController;
     private FlockingEntity _flockingEntity;
+    private Avoid _avoid;
 
     public FlockState(FSM<MinionController.States> fsm, MinionController minionController, FlockingEntity flockingEntity)
     {
         _fsm = fsm;
         _minionController = minionController;
         _flockingEntity = flockingEntity;
-
+        _avoid = new Avoid(_minionController.transform, _minionController.lineOfSight.obstaclesLayer, _minionController.obstacleRadius, _minionController.obstacleWeight);
     } // Constructor del Estado Flock.
 
     public override void Awake()
@@ -36,8 +37,11 @@ public class FlockState<T> : FSMState<T>
         else
         {
             Vector3 flockingDirection = _flockingEntity.UpdateDirection();
-            _minionController.Move(flockingDirection.normalized);
-            //_minionController.Look(flockingDirection);
+            Vector3 worldPositionFlock = flockingDirection + _minionController.transform.position;
+            //_minionController.Move(flockingDirection.normalized);
+
+            _avoid.SetTargetByVector(worldPositionFlock);
+            _minionController.Move(_avoid.GetDirection());
         }
     }
 
