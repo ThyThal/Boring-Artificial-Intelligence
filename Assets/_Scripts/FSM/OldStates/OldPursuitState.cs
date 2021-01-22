@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PursuitState<T> : FSMState<T>
+public class OldPursuitState<T> : FSMState<T>
 {
     [SerializeField] private Transform _myTransform;
     [SerializeField] private Transform _enemyTransform;
@@ -13,7 +13,7 @@ public class PursuitState<T> : FSMState<T>
     [SerializeField] private Avoid _avoid;
     private float currentDistance;
 
-    public PursuitState(Transform enemyTransform, EnemyController myController)
+    public OldPursuitState(Transform enemyTransform, EnemyController myController)
     {
         _enemyTransform = enemyTransform;
         _myController = myController;

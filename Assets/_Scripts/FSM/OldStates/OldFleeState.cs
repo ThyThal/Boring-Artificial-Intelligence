@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FleeState<T> : FSMState<T>
+public class OldFleeState<T> : FSMState<T>
 {
     //Variables
     private Flee _flee;
@@ -11,7 +11,7 @@ public class FleeState<T> : FSMState<T>
     private Rigidbody _rigidbody;
 
     //Constructor
-    public FleeState(EnemyController myController, Transform enemyTransform, Rigidbody rigidbody)
+    public OldFleeState(EnemyController myController, Transform enemyTransform, Rigidbody rigidbody)
     {
         _myController = myController;
         _enemyTransform = enemyTransform;

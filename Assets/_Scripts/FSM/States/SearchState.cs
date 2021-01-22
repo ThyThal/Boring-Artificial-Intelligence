@@ -4,36 +4,43 @@ using UnityEngine;
 
 public class SearchState<T> : FSMState<T>
 {
-    [SerializeField] private List<Node> _nodes;
-    [SerializeField] private List<Node> _path;
-    [SerializeField] private Transform _transform;
-    [SerializeField] private LayerMask _obstacles;
-    [SerializeField] private Node _closestNode;
-    [SerializeField] private Node _destiny;
-    [SerializeField] private int _pointer;
-    [SerializeField] private EnemyController _myEnemyController;
-    [SerializeField] private Avoid _avoid;
+    // Constructor Variables.
+    private FSM<MinionController.States> _fsm;
+    private MinionController _minionController;
 
-    AStar<Node> _theta = new AStar<Node>();
+    // Extra Variables.
+    private int _pointer;
+    private Transform _transform;
+    private List<Node> _path;
+    private List<Node> _nodes;
+    private Node _closestNode;
+    private Node _destinyNode;
+    private Avoid _avoid;
 
-    public SearchState(List<Node> nodes, Transform transform, LayerMask obstacles, EnemyController myEnemyController, Transform targetTransform)
+    private AStar<Node> _aStar = new AStar<Node>();
+
+    public SearchState(FSM<MinionController.States> fsm, MinionController minionController)
     {
-        _nodes = nodes;
-        _transform = transform;
-        _obstacles = obstacles;
-        _myEnemyController = myEnemyController;
-        _avoid = new Avoid(_myEnemyController.transform, _obstacles, _myEnemyController.obstacleRadius, _myEnemyController.obstacleWeight);
+        _fsm = fsm;
+        _minionController = minionController;
+        _transform = minionController.transform;
+        _nodes = GameManager.Instance.nodesList;
+
+        if (minionController.isBoss == true)
+        {
+            _avoid = new Avoid(_minionController.transform, _minionController.lineOfSight.obstaclesLayer, _minionController.obstacleRadius, _minionController.obstacleWeight);
+        }
     }
 
     public override void Awake()
     {
-        //if (_path.Count > 0) _path.Clear();
-        _pointer = 0;
+        if (_minionController.isBoss == false) { return; }
+        Debug.Log("Search State Awake");
+        _pointer = 0; // Reset Pointer.
         _closestNode = FindNearestNode();
-        _destiny = GetRandomNode();
-        _myEnemyController.currentNode = _destiny.transform;
-        _avoid.SetTarget(_myEnemyController.currentNode);
-        _path = _theta.Run(_closestNode, Satisfies, GetNeighbours, GetCost, Heuristic);
+        _destinyNode = GetRandomNode();
+        _avoid.SetTarget(_minionController.currentNode);
+        _path = _aStar.Run(_closestNode, Satisfies, GetNeighbours, GetCost, Heuristic);
     }
 
     public override void Execute()
@@ -41,14 +48,14 @@ public class SearchState<T> : FSMState<T>
         if (_pointer < _path.Count)
         {
             _avoid.SetTarget(_path[_pointer].transform);
-            _myEnemyController.Move(_avoid.GetDirection());
-            _myEnemyController.Look(_path[_pointer].transform.position);
+            _minionController.Move(_avoid.GetDirection());
+            _minionController.Look(_path[_pointer].transform.position);
 
             Vector3 target = _path[_pointer].transform.position;
             Vector3 difference = target - _transform.transform.position;
             var waypointDistace = difference.magnitude;
 
-            if (waypointDistace <= _myEnemyController.enemyMovement.safeDistanceToWaypoint) // Reached Waypoint
+            if (waypointDistace <= _minionController.enemyMovement.safeDistanceToWaypoint) // Reached Waypoint
             {
                 _pointer++;
             }
@@ -56,11 +63,17 @@ public class SearchState<T> : FSMState<T>
 
         else
         {
-            _myEnemyController.ExecuteTreeFromSleep();
+            _fsm.Transition(MinionController.States.IDLE);
         }
     }
 
-    Node FindNearestNode()
+    public override void Sleep()
+    {
+        //Debug.Log("Search State Sleep");
+    }
+
+    // ===== Search Methods ===== \\
+    private Node FindNearestNode()
     {
         //Declaro variables
         float currentDistance = float.PositiveInfinity;
@@ -73,7 +86,7 @@ public class SearchState<T> : FSMState<T>
             Vector3 diff = item.transform.position - _transform.transform.position;
             float dist = diff.magnitude;
             //Verifico si no hay obstaculos entre medio y si la distancia es menor a la distancia del nodo anterior
-            bool isFree = Physics.Raycast(_transform.transform.position, diff.normalized, dist, _obstacles);
+            bool isFree = Physics.Raycast(_transform.transform.position, diff.normalized, dist, _minionController.lineOfSight.obstaclesLayer);
             if (dist < currentDistance && !isFree)
             {
                 currentDistance = dist;
@@ -82,15 +95,15 @@ public class SearchState<T> : FSMState<T>
         }
         return nearestNode;
     }
-    Node GetRandomNode()
+    private Node GetRandomNode()
     {
         return _nodes[Random.Range(0, _nodes.Count - 1)];
     }
-    bool Satisfies(Node curr)
+    private bool Satisfies(Node curr)
     {
-        return curr == _destiny;
+        return curr == _destinyNode;
     }
-    List<Node> GetNeighbours(Node curr)
+    private List<Node> GetNeighbours(Node curr)
     {
         var list = new List<Node>();
         for (int i = 0; i < curr._neighbours.Count; i++)
@@ -99,14 +112,14 @@ public class SearchState<T> : FSMState<T>
         }
         return list;
     }
-    float Heuristic(Node curr)
+    private float Heuristic(Node curr)
     {
         float cost = 0;
         // if (curr.hasTrap) cost += 5;
-        cost += Vector3.Distance(curr.transform.position, _destiny.transform.position);
+        cost += Vector3.Distance(curr.transform.position, _destinyNode.transform.position);
         return cost;
     }
-    float GetCost(Node p, Node c)
+    private float GetCost(Node p, Node c)
     {
         return Vector3.Distance(p.transform.position, c.transform.position);
     }
@@ -114,8 +127,8 @@ public class SearchState<T> : FSMState<T>
     {
         _pointer = 0;
         _closestNode = FindNearestNode();
-        _destiny = GetRandomNode();
-        _myEnemyController.currentNode = _destiny.transform;
-        _path = _theta.Run(_closestNode, Satisfies, GetNeighbours, GetCost, Heuristic);
+        _destinyNode = GetRandomNode();
+        _minionController.currentNode = _destinyNode.transform;
+        _path = _aStar.Run(_closestNode, Satisfies, GetNeighbours, GetCost, Heuristic);
     }
 }

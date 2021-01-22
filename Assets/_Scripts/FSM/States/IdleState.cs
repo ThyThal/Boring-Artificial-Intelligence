@@ -5,24 +5,20 @@ using UnityEngine;
 public class IdleState<T> : FSMState<T>
 {
     private FSM<MinionController.States> _fsm;
-    [SerializeField] private MinionController _minionController;
-    [SerializeField] private FlockingEntity _flockingEntity;
-    [SerializeField] private float _timer;
+    private MinionController _minionController;
+    private float _timer;
 
-
-    [SerializeField] private EnemyController _enemyController;
-
-    public IdleState(EnemyController enemyController)
-    {
-        _enemyController = enemyController;
-    } // Constructor del Estado.
-
-    public IdleState(FSM<MinionController.States> fsm, MinionController minionController, FlockingEntity flockingEntity)
+    public IdleState(FSM<MinionController.States> fsm, MinionController minionController)
     {
         _fsm = fsm;
         _minionController = minionController;
-        _flockingEntity = flockingEntity;
-    } // Constructor del Estado.
+    } // Constructor del Estado Idle.
+
+    public override void Awake()
+    {
+        Debug.Log("Idle State Awake");
+        _timer = Random.Range(1, 3);
+    }
 
     public override void Execute()
     {
@@ -33,18 +29,15 @@ public class IdleState<T> : FSMState<T>
 
         else
         {
-            _fsm.Transition(MinionController.States.FLOCKING);
+            // If Minion is BOSS
+            if (_minionController.isBoss) { _fsm.Transition(MinionController.States.SEARCHING); }
+            // If Minion is NOT BOSS
+            else { _fsm.Transition(MinionController.States.FLOCKING); }
         }
-    }
-
-    public override void Awake()
-    {
-        Debug.Log("Idle State Awake");
-        _timer = Random.Range(1, 3);
     }
 
     public override void Sleep()
     {
-        Debug.Log("Idle State Sleep");
+        //Debug.Log("Idle State Sleep");
     }
 }

@@ -43,8 +43,8 @@ public class EnemyController : MonoBehaviour
 
     // Referencia al FSM.
     public FSM<string> fsm;
-    private SleepState<string> _sleepState;
-    private FleeState<string> _fleeState;
+    private OldSleepState<string> _sleepState;
+    private OldFleeState<string> _fleeState;
     private INode _initTree;
 
     // Keys de los estados del FSM.
@@ -148,40 +148,40 @@ public class EnemyController : MonoBehaviour
         fsm = new FSM<string>();
 
         // Crear los estados del FSM.
-        IdleState<string> idleState = new IdleState<string>(this);
-        PursuitState<string> pursuitState = new PursuitState<string>(currentEnemy, this);
-        SearchState<string> searchState = new SearchState<string>(_nodesList, transform, obstaclesLayer, this, currentEnemy);
-        _fleeState = new FleeState<string>(this, currentEnemy, rigidbody);
-        _sleepState = new SleepState<string>(this);
+        //IdleState<string> idleState = new OldIdleState<string>(this);
+        OldPursuitState<string> pursuitState = new OldPursuitState<string>(currentEnemy, this);
+        OldSearchState<string> searchState = new OldSearchState<string>(_nodesList, transform, obstaclesLayer, this, currentEnemy);
+        _fleeState = new OldFleeState<string>(this, currentEnemy, rigidbody);
+        _sleepState = new OldSleepState<string>(this);
 
-        idleState.AddTransition(_sleep, _sleepState);
-        idleState.AddTransition(_search, searchState);
-        idleState.AddTransition(_pursuit, pursuitState);
-        idleState.AddTransition(_flee, _fleeState);
+        //idleState.AddTransition(_sleep, _sleepState);
+        //idleState.AddTransition(_search, searchState);
+        //idleState.AddTransition(_pursuit, pursuitState);
+        //idleState.AddTransition(_flee, _fleeState);
 
         searchState.AddTransition(_sleep, _sleepState);
-        searchState.AddTransition(_idle, idleState);
+        //searchState.AddTransition(_idle, idleState);
         searchState.AddTransition(_pursuit, pursuitState);
         searchState.AddTransition(_flee, _fleeState);
 
         
-        _fleeState.AddTransition(_idle, idleState);/*
+        //_fleeState.AddTransition(_idle, idleState);/*
         _fleeState.AddTransition(_sleep, _sleepState);
-        fleeState.AddTransition(_search, searchState);
-        fleeState.AddTransition(_pursuit, pursuitState);*/
+        //fleeState.AddTransition(_search, searchState);
+        //fleeState.AddTransition(_pursuit, pursuitState);*/
 
         pursuitState.AddTransition(_sleep, _sleepState);
         pursuitState.AddTransition(_search, searchState);
-        pursuitState.AddTransition(_idle, idleState);
+        //pursuitState.AddTransition(_idle, idleState);
         pursuitState.AddTransition(_flee, _fleeState);
 
-        _sleepState.AddTransition(_idle, idleState);
+        //_sleepState.AddTransition(_idle, idleState);
         _sleepState.AddTransition(_search, searchState);
         _sleepState.AddTransition(_pursuit, pursuitState);
         _sleepState.AddTransition(_flee, _fleeState);
 
         // Asignar un valor inicial.
-        fsm.SetInitState(idleState);
+        //fsm.SetInitState(idleState);
     }
     private void GoToPursuit() {fsm.Transition(_pursuit); }
     private void GoToFlee() { fsm.Transition(_flee); }

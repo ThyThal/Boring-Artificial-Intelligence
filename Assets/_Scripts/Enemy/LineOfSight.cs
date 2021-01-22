@@ -4,11 +4,12 @@ using UnityEngine;
 
 public class LineOfSight : MonoBehaviour
 {
-    [SerializeField] public bool _sawTarget = false;
+    [SerializeField] public LayerMask obstaclesLayer;
+
+    [SerializeField] public bool sawTarget = false;
     [SerializeField] public Transform target;
     [SerializeField] private float _sightRange = 0;
     [SerializeField] private float _sightAngle = 100;
-    [SerializeField] public LayerMask obstaclesLayer;
 
     private void Update()
     {
@@ -19,7 +20,7 @@ public class LineOfSight : MonoBehaviour
 
         else
         {
-            _sawTarget = false;
+            sawTarget = false;
         }
     }
 
@@ -30,35 +31,35 @@ public class LineOfSight : MonoBehaviour
 
         if (target == null)
         {
-            _sawTarget = false;
+            sawTarget = false;
             return;
         } // Check Target.
 
         if (_distance > _sightRange) 
         {
-            _sawTarget = false;
+            sawTarget = false;
             return;
         } // Check Distance to Target.
 
         float _angleToTarget = Vector3.Angle(transform.forward, _distanceToTarget.normalized);
         if (_angleToTarget > (_sightAngle / 2))
         {
-            _sawTarget = false;
+            sawTarget = false;
             return;
         } // Check Angle to Target.
 
         if (Physics.Raycast(transform.position, _distanceToTarget.normalized, _distance, obstaclesLayer))
         {
-            _sawTarget = false;
+            sawTarget = false;
             return;
         } // Check for obstacles.
 
-        _sawTarget = true;
+        sawTarget = true;
     } // Check if Target is on Sight.
 
     public bool SawTarget()
     {
-        return _sawTarget;
+        return sawTarget;
     } // Return if has Enemy Sight
     private void OnDrawGizmosSelected()
     {

@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SleepState<T> : FSMState<T>
+public class OldSleepState<T> : FSMState<T>
 {
     [SerializeField] private float _timer;
     [SerializeField] private EnemyController _enemyController;
 
-    public SleepState(EnemyController enemyController)
+    public OldSleepState(EnemyController enemyController)
     {
         _enemyController = enemyController;
     } // Constructor del Estado.

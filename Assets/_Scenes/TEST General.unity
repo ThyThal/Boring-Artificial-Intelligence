@@ -589,6 +589,16 @@ PrefabInstance:
       propertyPath: m_Constraints
       value: 80
       objectReference: {fileID: 0}
+    - target: {fileID: 3829025456904151348, guid: d33e4b67fe1753e47be03aa7d152f875,
+        type: 3}
+      propertyPath: _personalSpaceRadius
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 4515723426328506873, guid: d33e4b67fe1753e47be03aa7d152f875,
+        type: 3}
+      propertyPath: _flockRadius
+      value: 20
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d33e4b67fe1753e47be03aa7d152f875, type: 3}
 --- !u!4 &306403698 stripped
@@ -3065,6 +3075,16 @@ PrefabInstance:
       propertyPath: m_Constraints
       value: 80
       objectReference: {fileID: 0}
+    - target: {fileID: 3829025456904151348, guid: d33e4b67fe1753e47be03aa7d152f875,
+        type: 3}
+      propertyPath: _personalSpaceRadius
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 4515723426328506873, guid: d33e4b67fe1753e47be03aa7d152f875,
+        type: 3}
+      propertyPath: _flockRadius
+      value: 20
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d33e4b67fe1753e47be03aa7d152f875, type: 3}
 --- !u!4 &1917899514 stripped
@@ -3255,6 +3275,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Constraints
       value: 80
+      objectReference: {fileID: 0}
+    - target: {fileID: 3829025456904151348, guid: d33e4b67fe1753e47be03aa7d152f875,
+        type: 3}
+      propertyPath: _personalSpaceRadius
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 4515723426328506873, guid: d33e4b67fe1753e47be03aa7d152f875,
+        type: 3}
+      propertyPath: _flockRadius
+      value: 20
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d33e4b67fe1753e47be03aa7d152f875, type: 3}

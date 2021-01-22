@@ -129,11 +129,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 40dcc0ff7b1916d46b50478c1c85de37, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _isBoss: 0
+  isBoss: 0
   _maxHealth: 100
   _speed: 5
+  currentNode: {fileID: 0}
+  currentEnemy: {fileID: 0}
+  currentObstacle: {fileID: 0}
+  obstacleRadius: 2.5
+  obstacleWeight: 1
+  lineOfSight: {fileID: 317425128680212406}
+  enemyMovement: {fileID: 0}
   _flockingEntity: {fileID: 4515723426328506873}
-  _lineOfSight: {fileID: 317425128680212406}
 --- !u!114 &4515723426328506873
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -146,7 +152,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dbfe546429cb3194f89a91e0508255ac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _flockRadius: 10
+  _flockRadius: 5
   _direction: {x: 0, y: 0, z: 0}
   _alliesLayer:
     serializedVersion: 2
@@ -169,13 +175,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac685ee2caeb15940b75acda8db0f7d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _sawTarget: 0
-  target: {fileID: 0}
-  _sightRange: 10
-  _sightAngle: 130
   obstaclesLayer:
     serializedVersion: 2
     m_Bits: 256
+  sawTarget: 0
+  target: {fileID: 0}
+  _sightRange: 10
+  _sightAngle: 130
 --- !u!114 &7570607541379159403
 MonoBehaviour:
   m_ObjectHideFlags: 0

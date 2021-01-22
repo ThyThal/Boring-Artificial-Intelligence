@@ -13,12 +13,16 @@ public class FlockState<T> : FSMState<T>
         _minionController = minionController;
         _flockingEntity = flockingEntity;
 
-    } // Constructor del Estado.
+    } // Constructor del Estado Flock.
+
+    public override void Awake()
+    {
+        Debug.Log("Flocking State Awake");
+        if (_minionController.isBoss == true) { return; }
+    }
 
     public override void Execute()
     {
-        Debug.Log("Flocking State Execute");
-
         // Get Nearby Allies.
         List<Transform> context = _flockingEntity.GetNearbyEntities();
 
@@ -36,13 +40,8 @@ public class FlockState<T> : FSMState<T>
         }
     }
 
-    public override void Awake()
-    {
-        Debug.Log("Flocking State Awake");
-    }
-
     public override void Sleep()
     {
-        Debug.Log("Flocking State Sleep");
+        //Debug.Log("Flocking State Sleep");
     }
 }
