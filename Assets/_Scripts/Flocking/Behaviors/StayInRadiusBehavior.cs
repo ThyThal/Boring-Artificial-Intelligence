@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class StayInRadiusBehavior : FlockingBehavior
 {
-    private float _radius = 10;
+    private float _radius = 150;
     public override Vector3 GetDirection(List<Transform> context)
     {
         Vector3 direction = Vector3.zero;

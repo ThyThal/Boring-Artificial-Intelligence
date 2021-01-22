@@ -37,6 +37,7 @@ public class FlockState<T> : FSMState<T>
         {
             Vector3 flockingDirection = _flockingEntity.UpdateDirection();
             _minionController.Move(flockingDirection.normalized);
+            //_minionController.Look(flockingDirection);
         }
     }
 

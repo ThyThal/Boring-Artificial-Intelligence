@@ -14,7 +14,7 @@ public class CohesionBehavior : FlockingBehavior
         {
             foreach (Transform item in context)
             {
-                centerOfMass += item.GetComponent<Rigidbody>().centerOfMass;
+                centerOfMass += item.position;
             }
 
             centerOfMass /= context.Count;
