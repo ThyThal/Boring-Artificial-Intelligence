@@ -357,6 +357,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 232092246}
+  - component: {fileID: 232092247}
   m_Layer: 0
   m_Name: = Nodes
   m_TagString: Untagged
@@ -391,6 +392,32 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &232092247
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 232092245}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d7d5fdb89c831d94c8a98d1bf1beaba8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _nodesList:
+  - {fileID: 2090466207}
+  - {fileID: 763569722}
+  - {fileID: 1534003329}
+  - {fileID: 1353667133}
+  - {fileID: 345996539}
+  - {fileID: 1437546887}
+  - {fileID: 544521487}
+  - {fileID: 1395045278}
+  - {fileID: 2049441208}
+  - {fileID: 1354031083}
+  - {fileID: 807669159}
+  - {fileID: 2126373155}
+  - {fileID: 427487003}
 --- !u!1 &259434172
 GameObject:
   m_ObjectHideFlags: 0
@@ -498,6 +525,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3311302618811064343, guid: d33e4b67fe1753e47be03aa7d152f875,
+        type: 3}
+      propertyPath: isGreen
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d33e4b67fe1753e47be03aa7d152f875, type: 3}
 --- !u!4 &306403698 stripped
@@ -516,9 +548,9 @@ GameObject:
   m_Component:
   - component: {fileID: 345996540}
   - component: {fileID: 345996539}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Node (1-1) CENTER
-  m_TagString: Untagged
+  m_TagString: Node
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -568,9 +600,9 @@ GameObject:
   m_Component:
   - component: {fileID: 427487004}
   - component: {fileID: 427487003}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Node (2-2) (4) OUTER
-  m_TagString: Untagged
+  m_TagString: Node
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -684,6 +716,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Orange Minion (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1482448028785421076, guid: 2fa119c183caeb943a846fb3d290d573,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2054055009369895413, guid: 2fa119c183caeb943a846fb3d290d573,
         type: 3}
@@ -883,9 +920,9 @@ GameObject:
   m_Component:
   - component: {fileID: 544521488}
   - component: {fileID: 544521487}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Node (2-0) SQUARE
-  m_TagString: Untagged
+  m_TagString: Node
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1126,9 +1163,9 @@ GameObject:
   m_Component:
   - component: {fileID: 763569723}
   - component: {fileID: 763569722}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Node (0-1)
-  m_TagString: Untagged
+  m_TagString: Node
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1353,9 +1390,9 @@ GameObject:
   m_Component:
   - component: {fileID: 807669158}
   - component: {fileID: 807669159}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Node (2-2) (2) OUTER
-  m_TagString: Untagged
+  m_TagString: Node
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1421,20 +1458,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2693cd2eff25b9a469dbdd01d107b224, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  nodesList:
-  - {fileID: 2090466207}
-  - {fileID: 763569722}
-  - {fileID: 1534003329}
-  - {fileID: 1353667133}
-  - {fileID: 345996539}
-  - {fileID: 1437546887}
-  - {fileID: 544521487}
-  - {fileID: 1395045278}
-  - {fileID: 2049441208}
-  - {fileID: 1354031083}
-  - {fileID: 807669159}
-  - {fileID: 2126373155}
-  - {fileID: 427487003}
+  nodesList: []
+  orangeAmount: 5
+  greenAmount: 5
 --- !u!4 &827383856
 Transform:
   m_ObjectHideFlags: 0
@@ -1533,89 +1559,6 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1116080317}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &963194225
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 963194228}
-  - component: {fileID: 963194227}
-  - component: {fileID: 963194226}
-  m_Layer: 0
-  m_Name: Main Camera
-  m_TagString: MainCamera
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!81 &963194226
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 963194225}
-  m_Enabled: 1
---- !u!20 &963194227
-Camera:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 963194225}
-  m_Enabled: 1
-  serializedVersion: 2
-  m_ClearFlags: 1
-  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
-  m_projectionMatrixMode: 1
-  m_GateFitMode: 2
-  m_FOVAxisMode: 0
-  m_SensorSize: {x: 36, y: 24}
-  m_LensShift: {x: 0, y: 0}
-  m_FocalLength: 50
-  m_NormalizedViewPortRect:
-    serializedVersion: 2
-    x: 0
-    y: 0
-    width: 1
-    height: 1
-  near clip plane: 0.3
-  far clip plane: 1000
-  field of view: 75
-  orthographic: 0
-  orthographic size: 5
-  m_Depth: -1
-  m_CullingMask:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_RenderingPath: -1
-  m_TargetTexture: {fileID: 0}
-  m_TargetDisplay: 0
-  m_TargetEye: 3
-  m_HDR: 1
-  m_AllowMSAA: 1
-  m_AllowDynamicResolution: 0
-  m_ForceIntoRT: 0
-  m_OcclusionCulling: 1
-  m_StereoConvergence: 10
-  m_StereoSeparation: 0.022
---- !u!4 &963194228
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 963194225}
-  m_LocalRotation: {x: 0.5735764, y: 0, z: 0, w: 0.8191521}
-  m_LocalPosition: {x: 0, y: 32.3, z: -17.92}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 70, y: 0, z: 0}
 --- !u!4 &979834035 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1360280171325096973, guid: 2362b85f03d42854d93fcf3dc64dcd7e,
@@ -1894,6 +1837,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Orange Minion (3)
       objectReference: {fileID: 0}
+    - target: {fileID: 1482448028785421076, guid: 2fa119c183caeb943a846fb3d290d573,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2054055009369895413, guid: 2fa119c183caeb943a846fb3d290d573,
         type: 3}
       propertyPath: m_RootOrder
@@ -2162,9 +2110,9 @@ GameObject:
   m_Component:
   - component: {fileID: 1353667134}
   - component: {fileID: 1353667133}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Node (1-0)
-  m_TagString: Untagged
+  m_TagString: Node
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2211,9 +2159,9 @@ GameObject:
   m_Component:
   - component: {fileID: 1354031084}
   - component: {fileID: 1354031083}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Node (2-2) (1) OUTER
-  m_TagString: Untagged
+  m_TagString: Node
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2260,9 +2208,9 @@ GameObject:
   m_Component:
   - component: {fileID: 1395045279}
   - component: {fileID: 1395045278}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Node (2-1)
-  m_TagString: Untagged
+  m_TagString: Node
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2305,6 +2253,89 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 580781201}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1426033520
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1426033523}
+  - component: {fileID: 1426033522}
+  - component: {fileID: 1426033521}
+  m_Layer: 0
+  m_Name: Camera
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!81 &1426033521
+AudioListener:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1426033520}
+  m_Enabled: 1
+--- !u!20 &1426033522
+Camera:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1426033520}
+  m_Enabled: 1
+  serializedVersion: 2
+  m_ClearFlags: 1
+  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
+  m_projectionMatrixMode: 1
+  m_GateFitMode: 2
+  m_FOVAxisMode: 0
+  m_SensorSize: {x: 36, y: 24}
+  m_LensShift: {x: 0, y: 0}
+  m_FocalLength: 50
+  m_NormalizedViewPortRect:
+    serializedVersion: 2
+    x: 0
+    y: 0
+    width: 1
+    height: 1
+  near clip plane: 0.3
+  far clip plane: 1000
+  field of view: 47.7
+  orthographic: 0
+  orthographic size: 5
+  m_Depth: 0
+  m_CullingMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_RenderingPath: -1
+  m_TargetTexture: {fileID: 0}
+  m_TargetDisplay: 0
+  m_TargetEye: 3
+  m_HDR: 1
+  m_AllowMSAA: 1
+  m_AllowDynamicResolution: 0
+  m_ForceIntoRT: 0
+  m_OcclusionCulling: 1
+  m_StereoConvergence: 10
+  m_StereoSeparation: 0.022
+--- !u!4 &1426033523
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1426033520}
+  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: 0, y: 88.39, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
 --- !u!1 &1436703155
 GameObject:
   m_ObjectHideFlags: 0
@@ -2350,9 +2381,9 @@ GameObject:
   m_Component:
   - component: {fileID: 1437546888}
   - component: {fileID: 1437546887}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Node (1-2)
-  m_TagString: Untagged
+  m_TagString: Node
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2399,9 +2430,9 @@ GameObject:
   m_Component:
   - component: {fileID: 1534003330}
   - component: {fileID: 1534003329}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Node (0-2) SQUARE
-  m_TagString: Untagged
+  m_TagString: Node
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3019,6 +3050,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Orange Minion (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 1482448028785421076, guid: 2fa119c183caeb943a846fb3d290d573,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2054055009369895413, guid: 2fa119c183caeb943a846fb3d290d573,
         type: 3}
       propertyPath: m_RootOrder
@@ -3147,6 +3183,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3311302618811064343, guid: d33e4b67fe1753e47be03aa7d152f875,
+        type: 3}
+      propertyPath: isGreen
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d33e4b67fe1753e47be03aa7d152f875, type: 3}
@@ -3339,6 +3380,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3311302618811064343, guid: d33e4b67fe1753e47be03aa7d152f875,
+        type: 3}
+      propertyPath: isGreen
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d33e4b67fe1753e47be03aa7d152f875, type: 3}
 --- !u!4 &2044145912 stripped
@@ -3357,9 +3403,9 @@ GameObject:
   m_Component:
   - component: {fileID: 2049441207}
   - component: {fileID: 2049441208}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Node (2-2) SQUARE
-  m_TagString: Untagged
+  m_TagString: Node
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3407,9 +3453,9 @@ GameObject:
   m_Component:
   - component: {fileID: 2090466206}
   - component: {fileID: 2090466207}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Node (0-0) SQUARE
-  m_TagString: Untagged
+  m_TagString: Node
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3457,9 +3503,9 @@ GameObject:
   m_Component:
   - component: {fileID: 2126373156}
   - component: {fileID: 2126373155}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Node (2-2) (3) OUTER
-  m_TagString: Untagged
+  m_TagString: Node
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3505,38 +3551,8 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 4872464024693853602, guid: e825131e7d224cd4f92e3691ca9b57af,
         type: 3}
-      propertyPath: isBoss
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4872464024693853602, guid: e825131e7d224cd4f92e3691ca9b57af,
-        type: 3}
-      propertyPath: obstacleRadius
-      value: 1.7
-      objectReference: {fileID: 0}
-    - target: {fileID: 4872464024693853602, guid: e825131e7d224cd4f92e3691ca9b57af,
-        type: 3}
-      propertyPath: minionsList.Array.size
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4872464024693853602, guid: e825131e7d224cd4f92e3691ca9b57af,
-        type: 3}
-      propertyPath: minionsList.Array.data[0]
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 4872464024693853602, guid: e825131e7d224cd4f92e3691ca9b57af,
-        type: 3}
-      propertyPath: minionsList.Array.data[1]
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 4872464024693853602, guid: e825131e7d224cd4f92e3691ca9b57af,
-        type: 3}
-      propertyPath: minionsList.Array.data[2]
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 4872464024693853602, guid: e825131e7d224cd4f92e3691ca9b57af,
-        type: 3}
-      propertyPath: minionsList.Array.data[3]
-      value: 
+      propertyPath: _maxHealth
+      value: 300
       objectReference: {fileID: 0}
     - target: {fileID: 7461738906809613658, guid: e825131e7d224cd4f92e3691ca9b57af,
         type: 3}
@@ -3597,16 +3613,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Green BOSS
-      objectReference: {fileID: 0}
-    - target: {fileID: 8043044677252294587, guid: e825131e7d224cd4f92e3691ca9b57af,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8262658404372341360, guid: e825131e7d224cd4f92e3691ca9b57af,
-        type: 3}
-      propertyPath: safeDistanceToWaypoint
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e825131e7d224cd4f92e3691ca9b57af, type: 3}
@@ -3784,6 +3790,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7837928778886103698, guid: 365379825a8c8e74cb5675c7bf232c15,
         type: 3}
+      propertyPath: _maxHealth
+      value: 300
+      objectReference: {fileID: 0}
+    - target: {fileID: 7837928778886103698, guid: 365379825a8c8e74cb5675c7bf232c15,
+        type: 3}
       propertyPath: obstacleRadius
       value: 1.7
       objectReference: {fileID: 0}
@@ -3905,6 +3916,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Orange Minion (0)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1482448028785421076, guid: 2fa119c183caeb943a846fb3d290d573,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2054055009369895413, guid: 2fa119c183caeb943a846fb3d290d573,
         type: 3}

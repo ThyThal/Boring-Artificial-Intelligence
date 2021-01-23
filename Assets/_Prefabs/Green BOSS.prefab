@@ -131,18 +131,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isBoss: 1
-  minionsList:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  isGreen: 1
+  minionsList: []
   _maxHealth: 100
   _speed: 5
+  sawEnemy: 0
   currentNode: {fileID: 0}
   currentEnemy: {fileID: 0}
   currentObstacle: {fileID: 0}
-  obstacleRadius: 2.5
+  obstacleRadius: 1.7
   obstacleWeight: 1
+  damage: 15
+  attackDistace: 3
+  currentHealCooldown: 3
+  currentAttackCooldown: 1
+  originalAttackCooldown: 0
+  originalHealCooldown: 0
   lineOfSight: {fileID: 7642006576902367747}
   enemyMovement: {fileID: 8262658404372341360}
   _flockingEntity: {fileID: 5819062489770024012}
@@ -252,5 +256,5 @@ MonoBehaviour:
   speed: 5
   originalSpeed: 0
   safeDistanceToEnemy: 5
-  safeDistanceToWaypoint: 1.3
+  safeDistanceToWaypoint: 1
   _rigidbody: {fileID: 0}

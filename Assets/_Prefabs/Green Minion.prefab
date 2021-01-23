@@ -26,7 +26,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &713547893959266543
 Transform:
   m_ObjectHideFlags: 0
@@ -131,14 +131,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isBoss: 0
+  isGreen: 1
   minionsList: []
   _maxHealth: 100
   _speed: 5
+  sawEnemy: 0
   currentNode: {fileID: 0}
   currentEnemy: {fileID: 0}
   currentObstacle: {fileID: 0}
   obstacleRadius: 2.5
   obstacleWeight: 1
+  damage: 15
+  attackDistace: 3
+  currentHealCooldown: 3
+  currentAttackCooldown: 1
+  originalAttackCooldown: 0
+  originalHealCooldown: 0
   lineOfSight: {fileID: 317425128680212406}
   enemyMovement: {fileID: 0}
   _flockingEntity: {fileID: 4515723426328506873}

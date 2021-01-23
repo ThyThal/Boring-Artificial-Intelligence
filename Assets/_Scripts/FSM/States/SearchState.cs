@@ -36,7 +36,7 @@ public class SearchState<T> : FSMState<T>
 
     public override void Awake()
     {
-        Debug.Log("Search State Awake");
+        //Debug.Log("Search State Awake");
         if (_minionController.isBoss == false) { return; }
         _closestNode = FindNearestNode();
         _destinyNode = GetRandomNode();

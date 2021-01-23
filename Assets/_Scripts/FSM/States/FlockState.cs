@@ -42,6 +42,7 @@ public class FlockState<T> : FSMState<T>
 
             _avoid.SetTargetByVector(worldPositionFlock);
             _minionController.Move(_avoid.GetDirection());
+            _minionController.Look(worldPositionFlock);
         }
     }
 

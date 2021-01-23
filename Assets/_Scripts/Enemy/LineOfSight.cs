@@ -24,6 +24,11 @@ public class LineOfSight : MonoBehaviour
         }
     }
 
+    public void SetTarget(GameObject gameObject)
+    {
+        target = gameObject.transform;
+    }
+
     public void IsInSight()
     {
         Vector3 _distanceToTarget = (target.position - transform.position);
