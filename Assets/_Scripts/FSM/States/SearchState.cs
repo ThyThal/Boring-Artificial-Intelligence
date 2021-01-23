@@ -38,6 +38,7 @@ public class SearchState<T> : FSMState<T>
     {
         //Debug.Log("Search State Awake");
         if (_minionController.isBoss == false) { return; }
+        _nodes = GameManager.Instance.nodesList;
         _closestNode = FindNearestNode();
         _destinyNode = GetRandomNode();
         _pointer = 0; // Reset Pointer.
@@ -131,6 +132,7 @@ public class SearchState<T> : FSMState<T>
     }
     public void FindPath()
     {
+        _nodes = GameManager.Instance.nodesList;
         _pointer = 0;
         _closestNode = FindNearestNode();
         _destinyNode = GetRandomNode();

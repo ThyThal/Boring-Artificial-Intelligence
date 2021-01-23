@@ -133,7 +133,7 @@ MonoBehaviour:
   isBoss: 1
   isGreen: 1
   minionsList: []
-  _maxHealth: 100
+  _maxHealth: 300
   _speed: 5
   sawEnemy: 0
   currentNode: {fileID: 0}

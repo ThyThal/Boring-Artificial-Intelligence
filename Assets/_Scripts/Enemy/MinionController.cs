@@ -218,9 +218,24 @@ public class MinionController : MonoBehaviour
     }
     public void Death()
     {
-        if (isGreen) { GameManager.Instance.greenAmount -= 1; }
-        else { GameManager.Instance.orangeAmount -= 1; }
+        if (isGreen) { GameManager.Instance.greenKilledAmount -= 1; }
+        else { GameManager.Instance.orangeKilledAmount -= 1; }
         Destroy(this.gameObject);
+    }
+
+    public void GenerateLists()
+    {
+        if (isGreen)
+        {
+            minionsList = GameObject.FindGameObjectsWithTag("GreenEnemy");
+            _enemiesList = GameObject.FindGameObjectsWithTag("OrangeEnemy");
+        }
+
+        else
+        {
+            minionsList = GameObject.FindGameObjectsWithTag("OrangeEnemy");
+            _enemiesList = GameObject.FindGameObjectsWithTag("GreenEnemy");
+        }
     }
 
 
