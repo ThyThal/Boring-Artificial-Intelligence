@@ -3917,11 +3917,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Orange Minion (0)
       objectReference: {fileID: 0}
-    - target: {fileID: 1482448028785421076, guid: 2fa119c183caeb943a846fb3d290d573,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 2054055009369895413, guid: 2fa119c183caeb943a846fb3d290d573,
         type: 3}
       propertyPath: m_RootOrder
