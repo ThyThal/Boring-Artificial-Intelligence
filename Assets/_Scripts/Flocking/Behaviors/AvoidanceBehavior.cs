@@ -12,18 +12,27 @@ public class AvoidanceBehavior : FlockingBehavior
 
         foreach (Transform item in context)
         {
-            Vector3 offset = this.transform.position - item.transform.position;
-
-            // If item is closer than personal space, space myself.
-            if (offset.magnitude < _personalSpaceRadius)
+            if (item.transform.position != this.transform.position)
             {
+                Vector3 offset = this.transform.position - item.transform.position;
 
-                float scale = offset.magnitude / Mathf.Sqrt(_personalSpaceRadius);
+                // If item is closer than personal space, space myself.
+                if (offset.magnitude < _personalSpaceRadius)
+                {
 
-                Vector3 forceVector = offset.normalized / scale;
+                    float scale = offset.magnitude / Mathf.Sqrt(_personalSpaceRadius);
 
-                direction += forceVector;
+                    Vector3 forceVector = offset.normalized / scale;
+
+                    direction += forceVector;
+                }
+
+                if (float.IsNaN(direction.x))
+                {
+                    Debug.Log("NaN");
+                }
             }
+
         }
 
         return direction;

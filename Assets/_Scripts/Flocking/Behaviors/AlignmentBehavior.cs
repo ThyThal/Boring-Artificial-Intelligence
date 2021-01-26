@@ -8,13 +8,14 @@ public class AlignmentBehavior : FlockingBehavior
     {
         Vector3 direction = Vector3.zero;
 
-        if (context.Count > 0)
+        if (context.Count >= 0)
         {
             // Get direction to nearby allies.
             foreach (Transform item in context)
             {
-                Vector3 itemDirection = item.GetComponent<FlockingEntity>().Direction;
-                direction += itemDirection;
+                FlockingEntity flockEnt = item.GetComponent<FlockingEntity>();
+                Vector3 itemDirection = flockEnt.Direction; // FAIL
+                direction += itemDirection; // FAIL
             }
 
             // Get an average position of the context.

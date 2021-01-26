@@ -5,7 +5,7 @@ using UnityEngine;
 public class FlockingEntity : MonoBehaviour
 {
     [SerializeField] private float _flockRadius = 5f;
-    [SerializeField] private Vector3 _direction;
+    [SerializeField] private Vector3 _direction = Vector3.zero;
     [SerializeField] private LayerMask _alliesLayer;
     [SerializeField] private Collider _myCollider;
     [SerializeField] private FlockingBehavior[] _flockingBehaviors;
@@ -13,6 +13,11 @@ public class FlockingEntity : MonoBehaviour
     private void Awake()
     {
         _myCollider = this.GetComponent<Collider>();
+        
+    }
+
+    private void Start()
+    {
         _flockingBehaviors = this.GetComponents<FlockingBehavior>();
     }
 
@@ -49,6 +54,11 @@ public class FlockingEntity : MonoBehaviour
         {
             FlockingBehavior behavior = _flockingBehaviors[i];
             direction += behavior.GetDirection(context);
+
+            if (float.IsNaN(direction.x))
+            {
+                Debug.Log("NaN");
+            }
         }
 
         _direction = direction;

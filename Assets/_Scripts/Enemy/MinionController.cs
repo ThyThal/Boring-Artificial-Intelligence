@@ -17,12 +17,12 @@ public class MinionController : MonoBehaviour
     [Header("Main Stats")]
     [SerializeField] public bool isBoss;
     [SerializeField] private bool isGreen;
-    [SerializeField] public GameObject[] minionsList;
     [SerializeField] private float _maxHealth = 100f;
     [SerializeField] private float _speed = 2f;
 
     [Header("Saved Targets")]
-    private GameObject[] _enemiesList;
+    [SerializeField] public GameObject[] minionsList;
+    [SerializeField] private GameObject[] _enemiesList;
     public bool sawEnemy;
     [SerializeField] public Transform currentNode;
     [SerializeField] public Transform currentEnemy;

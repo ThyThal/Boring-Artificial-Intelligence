@@ -18,7 +18,7 @@ public class FlockState<T> : FSMState<T>
 
     public override void Awake()
     {
-        //Debug.Log("Flocking State Awake");
+        Debug.Log("Flocking State Awake");
         if (_minionController.isBoss == true) { return; }
     }
 

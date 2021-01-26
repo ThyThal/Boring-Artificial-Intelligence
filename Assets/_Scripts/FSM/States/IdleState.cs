@@ -16,7 +16,7 @@ public class IdleState<T> : FSMState<T>
 
     public override void Awake()
     {
-        //Debug.Log("Idle State Awake");
+        Debug.Log("Idle State Awake");
         _timer = Random.Range(1, 3);
     }
 
