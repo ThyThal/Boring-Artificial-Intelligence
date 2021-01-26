@@ -8,7 +8,7 @@ public class AlignmentBehavior : FlockingBehavior
     {
         Vector3 direction = Vector3.zero;
 
-        if (context.Count >= 0)
+        if (context.Count > 0)
         {
             // Get direction to nearby allies.
             foreach (Transform item in context)
