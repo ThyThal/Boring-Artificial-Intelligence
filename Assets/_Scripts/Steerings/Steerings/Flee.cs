@@ -16,6 +16,7 @@ public class Flee : ISteeringBehaviour
     }
     public Vector3 GetDirection()
     {
+        if (_enemyTransform == null) { return Vector3.zero; }
         Vector3 posPrediction = _enemyTransform.position + _timePrediction * _myRigidbody.velocity.magnitude * _enemyTransform.forward;
         Vector3 dir = (_myTransform.position - posPrediction).normalized;
         return dir;

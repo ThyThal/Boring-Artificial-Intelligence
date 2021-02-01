@@ -14,13 +14,13 @@ public class CanvasManager : MonoBehaviour
     [SerializeField] private Text _orangeStatus;
     [SerializeField] private Text _orangeLife;
 
-    EnemyController _orangeController;
-    EnemyController _greenController;
+    MinionController _orangeController;
+    MinionController _greenController;
 
     private void Awake()
     {
-        _orangeController = _orangeBoss.GetComponent<EnemyController>();
-        _greenController = _greenBoss.GetComponent<EnemyController>();
+        _orangeController = _orangeBoss.GetComponent<MinionController>();
+        _greenController = _greenBoss.GetComponent<MinionController>();
     }
 
 
@@ -28,13 +28,13 @@ public class CanvasManager : MonoBehaviour
     {
         if (_orangeBoss != null)
         {
-            _orangeStatus.text = $"Status: {_orangeController.fsm.GetCurrentState()}";
+            _orangeStatus.text = $"Status: {_orangeController._fsm.GetCurrentState()}";
             _orangeLife.text = $"Life: {_orangeController.lifeController.GetCurrentLife()}";
         }
 
         if (_greenBoss != null)
         {
-            _greenStatus.text = $"Status: {_greenController.fsm.GetCurrentState()}";
+            _greenStatus.text = $"Status: {_greenController._fsm.GetCurrentState()}";
             _greenLife.text = $"Life: {_greenController.lifeController.GetCurrentLife()}";
         }
     }

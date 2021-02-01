@@ -24,11 +24,16 @@ public class LifeController
         if (currentHealth <= 0) _deathDelegate.Invoke();
     }
 
-    public void GetHeal(float heal)
+    public void GetHeal(float heal, bool isBoss)
     {
         currentHealth += heal;
         currentHealth = Mathf.Clamp(currentHealth, 0, _maxHealth);
-        if (currentHealth > 100) currentHealth = 100;
+        if (isBoss) {
+            if (currentHealth > 500) currentHealth = 500;
+        }
+        if (!isBoss) {
+            if (currentHealth > 100) currentHealth = 100; }
+        
     }
 
     public bool LowHealth()

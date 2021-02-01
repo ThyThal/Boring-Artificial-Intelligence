@@ -7,33 +7,45 @@ public class PursuitState<T> : FSMState<T>
     private FSM<MinionController.States> _fsm;
     private MinionController _minionController;
     private Transform _enemyTransform;
-    private Avoid _avoid;
+    private MinionController _enemyController;
+    public Avoid avoid;
     private float currentDistance;
     public PursuitState(FSM<MinionController.States> fsm, MinionController minionController)
     {
         _fsm = fsm;
         _minionController = minionController;
-        _avoid = new Avoid(_minionController.transform, _minionController.lineOfSight.obstaclesLayer, _minionController.obstacleRadius, _minionController.obstacleWeight);
+        avoid = new Avoid(_minionController.transform, _minionController.lineOfSight.obstaclesLayer, _minionController.obstacleRadius, _minionController.obstacleWeight);
     }
 
     public override void Awake()
     {
         //Debug.Log("Pursuit State Awake");
         _enemyTransform = _minionController.currentEnemy;
-        _avoid.SetTarget(_enemyTransform);
+        _enemyController = _enemyTransform.GetComponent<MinionController>();
+        avoid.SetTarget(_enemyTransform);
     }
 
     public override void Execute()
     {
         if (_enemyTransform != null)
         {
+            if (_enemyController.isFlee)
+            {
+                _enemyTransform = null;
+                _minionController.currentEnemy = null;
+                _minionController.CheckEnemies();
+                _enemyTransform = _minionController.currentEnemy;
+                _fsm.Transition(MinionController.States.IDLE);
+            }
+
             CheckCooldown();
         }
 
         if (_enemyTransform == null)
-        {
+        {   
             _minionController.CheckEnemies();
             _enemyTransform = _minionController.currentEnemy;
+            _fsm.Transition(MinionController.States.IDLE);
         }
     }
 
@@ -56,7 +68,7 @@ public class PursuitState<T> : FSMState<T>
         if (currentDistance <= 10) { AttackEnemy(); }
         if (currentDistance > 8)
         {
-            _minionController.Move(_avoid.GetDirection());
+            _minionController.Move(avoid.GetDirection());
             _minionController.Look(_enemyTransform.position);
         }
     }

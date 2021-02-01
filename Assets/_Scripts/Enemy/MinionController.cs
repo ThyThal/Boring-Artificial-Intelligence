@@ -18,7 +18,16 @@ public class MinionController : MonoBehaviour
     [SerializeField] public bool isBoss;
     [SerializeField] private bool isGreen;
     [SerializeField] private float _maxHealth = 100f;
-    [SerializeField] private float _speed = 2f;
+    [SerializeField] private float _currentHealth;
+    [SerializeField] public float _speed = 2f;
+    public float _ogSpeed;
+
+    [Header("Low Health & Flee")]
+    [SerializeField] public bool isFlee;
+    [SerializeField] private float _lowHealth = 25f;
+    [SerializeField] private float _recoverHealth = 50;
+    private float _OGlowHealth;
+
 
     [Header("Saved Targets")]
     [SerializeField] public GameObject[] minionsList;
@@ -47,6 +56,7 @@ public class MinionController : MonoBehaviour
     [SerializeField] public EnemyMovement enemyMovement;
     [SerializeField] private FlockingEntity _flockingEntity;
     [SerializeField] public LifeController lifeController;
+    [SerializeField] private LayerMask wallLayer;
 
 
     public FSM<States> _fsm;
@@ -69,17 +79,21 @@ public class MinionController : MonoBehaviour
             minionsList = GameObject.FindGameObjectsWithTag("OrangeEnemy");
             _enemiesList = GameObject.FindGameObjectsWithTag("GreenEnemy"); }
 
-        // Original Values
+        // Cooldown Original Values
         originalHealCooldown = currentHealCooldown;
         originalAttackCooldown = currentAttackCooldown;
+
+        // Life Values
+        _ogSpeed = _speed;
         lifeController = new LifeController(_maxHealth, Death);
+        _currentHealth = lifeController.GetCurrentLife();
+        _OGlowHealth = _lowHealth;
     }
 
     protected virtual void Start()
     {
-        CreateRoulette();
         InitializeFSM();
-        InitializeBinaryTree();
+        InitializeBinaryTree();        
     }
 
     protected virtual void Update()
@@ -87,6 +101,17 @@ public class MinionController : MonoBehaviour
         // Timers
         currentHealCooldown -= Time.deltaTime;
         currentAttackCooldown -= Time.deltaTime;
+
+        // Life
+        _currentHealth = lifeController.GetCurrentLife();
+        if (isBoss) { _lowHealth = _OGlowHealth * 3.5f; }
+        if (_currentHealth < _lowHealth) 
+        {
+            CreateRoulette();
+
+            _fsm.Transition(ExecuteRoulette()); 
+        }
+
         _fsm.OnUpdate();
         CheckEnemies();
     }
@@ -99,11 +124,18 @@ public class MinionController : MonoBehaviour
         SearchState<States> searchState = new SearchState<States>(_fsm, this);
         FlockState<States> flockState = new FlockState<States>(_fsm, this, _flockingEntity);
         PursuitState<States> pursuitState = new PursuitState<States>(_fsm, this);
+        FleeState<States> fleeState = new FleeState<States>(_fsm, this);
 
         // [EVERYONE] Idle Transitions.
         idleState.AddTransition(States.FLOCKING, flockState);
         idleState.AddTransition(States.SEARCHING, searchState);
         idleState.AddTransition(States.PURSUIT, pursuitState);
+
+        pursuitState.AddTransition(States.FLEE, fleeState);
+        pursuitState.AddTransition(States.FLOCKING, flockState);
+
+        fleeState.AddTransition(States.IDLE, idleState);
+
 
         // [BOSS] Search Transitions.
         searchState.AddTransition(States.IDLE, idleState);
@@ -142,23 +174,6 @@ public class MinionController : MonoBehaviour
         _initTree.Execute();
     }
 
-    #region
-    private void CreateRoulette()
-    {
-        _roulette = new Roulette<string>();
-
-        _rouletteStates = new Dictionary<string, int>();
-        _rouletteStates.Add(_flee, 80);
-        _rouletteStates.Add(_pursuit, 20);
-    }
-
-    MinionController.States ExecuteRoulette()
-    {
-        var a = _roulette.Run(_rouletteStates);
-        if (a == _pursuit) { return States.PURSUIT; }
-        else { return States.FLEE; }
-    }
-    #endregion === ROULETTE ===
 
 
     public void CheckEnemies()
@@ -184,7 +199,7 @@ public class MinionController : MonoBehaviour
 
         if (currentEnemy != null)
         {
-            if (lineOfSight.SawTarget())
+            if (lineOfSight.SawTarget() && !isFlee)
             {
                 AlertAllies();
                 return;
@@ -203,6 +218,20 @@ public class MinionController : MonoBehaviour
             controller.GoToPursuit();
         }
     }
+
+    public void AlertFlee()
+    {
+        foreach (var ally in minionsList)
+        {
+            if (ally == null) { return; }
+            if (ally != this.gameObject)
+            {
+                var controller = ally.GetComponent<MinionController>();
+                controller.currentEnemy = null;
+                controller._fsm.Transition(States.FLOCKING);
+            }
+        }
+    }
     private void Nothing()
     {
         return;
@@ -210,6 +239,8 @@ public class MinionController : MonoBehaviour
     public void Move(Vector3 direction)
     {
         Vector3 targetPosition = transform.position + (direction * _speed * Time.deltaTime);
+        var hit = Physics.Raycast(transform.position, transform.forward, 3f, wallLayer);
+        if (hit == true) { return; }
         transform.position = targetPosition;
     }
     public void Look(Vector3 point)
@@ -238,5 +269,24 @@ public class MinionController : MonoBehaviour
         }
     }
 
+    // ROULETTE
+    #region
+    private void CreateRoulette()
+    {
+        _roulette = new Roulette<string>();
+        var flockComponent = GetComponent<FlockingEntity>();
+        List<Transform> nearAllies = flockComponent.GetNearbyEntities();
 
+        _rouletteStates = new Dictionary<string, int>();
+        _rouletteStates.Add(_flee, 80);
+        _rouletteStates.Add(_pursuit, 20 * nearAllies.Count);
+    }
+
+    MinionController.States ExecuteRoulette()
+    {
+        var a = _roulette.Run(_rouletteStates);
+        if (a == _pursuit) { return States.PURSUIT; }
+        else { return States.FLEE; }
+    }
+    #endregion === ROULETTE ===
 }

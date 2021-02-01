@@ -132,9 +132,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isBoss: 0
   isGreen: 0
-  minionsList: []
   _maxHealth: 100
+  _currentHealth: 0
   _speed: 5
+  _ogSpeed: 0
+  isFlee: 0
+  _lowHealth: 25
+  _recoverHealth: 50
+  minionsList: []
+  _enemiesList: []
   sawEnemy: 0
   currentNode: {fileID: 0}
   currentEnemy: {fileID: 0}
@@ -150,6 +156,9 @@ MonoBehaviour:
   lineOfSight: {fileID: 1225480869053294252}
   enemyMovement: {fileID: 0}
   _flockingEntity: {fileID: 3156287376427929827}
+  wallLayer:
+    serializedVersion: 2
+    m_Bits: 4096
 --- !u!114 &3156287376427929827
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -162,7 +171,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dbfe546429cb3194f89a91e0508255ac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _flockRadius: 5
+  _flockRadius: 40
   _direction: {x: 0, y: 0, z: 0}
   _alliesLayer:
     serializedVersion: 2
@@ -216,7 +225,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9f4873321e9aae2449d476bb7966233e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _personalSpaceRadius: 3
+  _personalSpaceRadius: 20
 --- !u!114 &8558130217832281777
 MonoBehaviour:
   m_ObjectHideFlags: 0

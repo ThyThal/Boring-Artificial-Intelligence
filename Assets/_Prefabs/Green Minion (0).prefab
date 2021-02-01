@@ -21,7 +21,7 @@ GameObject:
   - component: {fileID: 7179553873778759595}
   - component: {fileID: 275259974484920126}
   m_Layer: 10
-  m_Name: Green Minion
+  m_Name: Green Minion (0)
   m_TagString: GreenEnemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -132,9 +132,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isBoss: 0
   isGreen: 1
-  minionsList: []
   _maxHealth: 100
+  _currentHealth: 0
   _speed: 5
+  _ogSpeed: 0
+  isFlee: 0
+  _lowHealth: 25
+  _recoverHealth: 50
+  minionsList: []
+  _enemiesList: []
   sawEnemy: 0
   currentNode: {fileID: 0}
   currentEnemy: {fileID: 0}
@@ -150,6 +156,9 @@ MonoBehaviour:
   lineOfSight: {fileID: 317425128680212406}
   enemyMovement: {fileID: 0}
   _flockingEntity: {fileID: 4515723426328506873}
+  wallLayer:
+    serializedVersion: 2
+    m_Bits: 4096
 --- !u!114 &4515723426328506873
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -162,7 +171,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dbfe546429cb3194f89a91e0508255ac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _flockRadius: 20
+  _flockRadius: 40
   _direction: {x: 0, y: 0, z: 0}
   _alliesLayer:
     serializedVersion: 2
