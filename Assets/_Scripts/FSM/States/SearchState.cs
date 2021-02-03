@@ -68,8 +68,11 @@ public class SearchState<T> : FSMState<T>
         {
             foreach (var minion in _minionsList)
             {
-                minion.GetComponent<MinionController>()._fsm.Transition(MinionController.States.IDLE);
-                _pointer = 0;
+                if (minion != null)
+                {
+                    minion.GetComponent<MinionController>()._fsm.Transition(MinionController.States.IDLE);
+                    _pointer = 0;
+                }
             }
         }
     }

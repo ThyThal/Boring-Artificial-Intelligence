@@ -20,6 +20,7 @@ public class FlockState<T> : FSMState<T>
     {
         Debug.Log("Flocking State Awake");
         if (_minionController.isBoss == true) { return; }
+        _flockingEntity.isFlocking = true;
     }
 
     public override void Execute()
@@ -48,6 +49,7 @@ public class FlockState<T> : FSMState<T>
 
     public override void Sleep()
     {
+        _flockingEntity.isFlocking = false;
         //Debug.Log("Flocking State Sleep");
     }
 }

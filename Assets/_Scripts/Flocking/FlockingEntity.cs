@@ -9,6 +9,8 @@ public class FlockingEntity : MonoBehaviour
     [SerializeField] private LayerMask _alliesLayer;
     [SerializeField] private Collider _myCollider;
     [SerializeField] private FlockingBehavior[] _flockingBehaviors;
+    public bool isFlocking;
+
 
     private void Awake()
     {

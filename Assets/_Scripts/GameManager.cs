@@ -28,8 +28,13 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
-        if (greenKilledAmount <= 0) { Debug.Log("Orange Wins!"); SceneManager.LoadScene(0); }
-        if (orangeKilledAmount <= 0) { Debug.Log("Green Wins!"); SceneManager.LoadScene(0); }
+        if (greenKilledAmount <= 0) {
+            Debug.Log("Orange Wins!"); 
+            SceneManager.LoadScene(0); }
+
+        if (orangeKilledAmount <= 0) { 
+            Debug.Log("Green Wins!"); 
+            SceneManager.LoadScene(0); }
     }
 
 

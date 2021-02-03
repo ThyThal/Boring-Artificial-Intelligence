@@ -33,7 +33,23 @@ public class IdleState<T> : FSMState<T>
             // If Minion is BOSS
             if (_minionController.isBoss) { _fsm.Transition(MinionController.States.SEARCHING); }
             // If Minion is NOT BOSS
-            else { _fsm.Transition(MinionController.States.FLOCKING); }
+            else
+            {
+                if (_minionController.IsBossAlive())
+                {
+                    _fsm.Transition(MinionController.States.FLOCKING);
+                    return;
+                }
+
+                else
+                {
+                    if (_minionController._enemiesList.Length > 0)
+                    {
+                        _fsm.Transition(MinionController.States.PURSUIT);
+                    }
+                }
+                
+            }
         }
     }
 

@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class MinionController : MonoBehaviour
 {
@@ -23,6 +24,7 @@ public class MinionController : MonoBehaviour
     public float _ogSpeed;
 
     [Header("Low Health & Flee")]
+    [SerializeField] private MinionController _teamBoss;
     [SerializeField] public bool isFlee;
     [SerializeField] private float _lowHealth = 25f;
     [SerializeField] private float _recoverHealth = 50;
@@ -31,10 +33,12 @@ public class MinionController : MonoBehaviour
 
     [Header("Saved Targets")]
     [SerializeField] public GameObject[] minionsList;
-    [SerializeField] private GameObject[] _enemiesList;
+    [SerializeField] public GameObject[] _enemiesList;
+    private List<GameObject> enemiesObjects = new List<GameObject>();
     public bool sawEnemy;
     [SerializeField] public Transform currentNode;
     [SerializeField] public Transform currentEnemy;
+    [SerializeField] public Vector3 savedEnemyPosition;
     [SerializeField] public Transform currentObstacle;
 
     [Header("Obstacle Values")]
@@ -98,6 +102,8 @@ public class MinionController : MonoBehaviour
 
     protected virtual void Update()
     {
+        if (currentEnemy != null) { savedEnemyPosition = currentEnemy.position; }
+
         // Timers
         currentHealCooldown -= Time.deltaTime;
         currentAttackCooldown -= Time.deltaTime;
@@ -107,9 +113,16 @@ public class MinionController : MonoBehaviour
         if (isBoss) { _lowHealth = _OGlowHealth * 3.5f; }
         if (_currentHealth < _lowHealth) 
         {
-            CreateRoulette();
+            if (IsBossAlive() == false && isBoss == false)
+            {
+                _fsm.Transition(States.PURSUIT);
+            }
 
-            _fsm.Transition(ExecuteRoulette()); 
+            else
+            {
+                CreateRoulette();
+                _fsm.Transition(ExecuteRoulette());
+            }
         }
 
         _fsm.OnUpdate();
@@ -214,7 +227,7 @@ public class MinionController : MonoBehaviour
         {
             if (ally == null) { return; }
             var controller = ally.GetComponent<MinionController>();
-            controller.currentEnemy = currentEnemy;
+            controller.currentEnemy = currentEnemy;           
             controller.GoToPursuit();
         }
     }
@@ -267,6 +280,53 @@ public class MinionController : MonoBehaviour
             minionsList = GameObject.FindGameObjectsWithTag("OrangeEnemy");
             _enemiesList = GameObject.FindGameObjectsWithTag("GreenEnemy");
         }
+
+        for (int i = 0; i < _enemiesList.Length; i++)
+        {
+            enemiesObjects.Add(_enemiesList[i]);
+        }
+
+        FindBoss();
+    }
+
+    private void FindBoss()
+    {
+        for (int i = 0; i < minionsList.Length; i++)
+        {
+            var currentMinion = minionsList[i].GetComponent<MinionController>();
+            if (currentMinion.isBoss == true)
+            {
+                _teamBoss = currentMinion;
+                return;
+            }
+        }
+    }
+
+    public bool IsBossAlive()
+    {
+        if (_teamBoss != null) { return true; }
+        else return false;
+    }
+
+    public void SelectRandomEnemy()
+    {
+        enemiesObjects.Clear();
+        for (int i = 0; i < _enemiesList.Length; i++)
+        {
+            if (_enemiesList[i].transform == null)
+            {
+
+            }
+
+            if (_enemiesList[i].transform != null)
+            {
+                enemiesObjects.Add(_enemiesList[i]);
+            }
+        }
+
+        var aliveAmount = enemiesObjects.Count;
+        var newEnemy = Random.Range(0, enemiesObjects.Count);
+        currentEnemy = enemiesObjects[newEnemy].transform;
     }
 
     // ROULETTE

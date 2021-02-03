@@ -23,18 +23,22 @@ public class FleeState<T> : FSMState<T>
     public FleeState(FSM<MinionController.States> fsm, MinionController minionController)
     {
         _fsm = fsm;
-        _minionController = minionController;        
+        _minionController = minionController;
+        _OGlowHealth = _lowHealth;
+        _OGrecoverHealth = _recoverHealth;
     }
 
     public override void Awake()
     {
         Debug.Log("Flee State Awake");
+        if (_minionController.currentEnemy == null) { _minionController.SelectRandomEnemy(); }
+
         _flee = new Flee(_minionController.transform, _minionController.currentEnemy.transform, _minionController.GetComponent<Rigidbody>(), 0.5f);
         _avoid = new Avoid(_minionController.transform, _minionController.lineOfSight.obstaclesLayer, _minionController.obstacleRadius, _minionController.obstacleWeight);
         _minionController.isFlee = true;
         _minionController._speed = _minionController._ogSpeed * 1.5f;
-        _OGlowHealth = _lowHealth;
-        _OGrecoverHealth = _recoverHealth;
+        
+        
 
         if (_minionController.isBoss)
         {

@@ -6,6 +6,7 @@ public class Avoid : ISteeringBehaviour
 {
     [SerializeField] private Transform _myTransform;
     [SerializeField] private Transform _targetTransform;
+    [SerializeField] private FlockingEntity flockingEntity;
     [SerializeField] private Vector3 _targetVector;
     [SerializeField] private LayerMask _obstacleLayer;
     [SerializeField] private float _obstacleRadius;
@@ -17,6 +18,7 @@ public class Avoid : ISteeringBehaviour
         _obstacleLayer = obstacleLayer;
         _obstacleRadius = obstacleRadius;
         _obstacleWeight = obstacleWeight;
+        flockingEntity = myTransform.gameObject.GetComponent<FlockingEntity>();
     }
 
     public void SetTarget(Transform target)
