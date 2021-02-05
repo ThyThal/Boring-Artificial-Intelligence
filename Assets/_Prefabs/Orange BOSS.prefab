@@ -135,12 +135,14 @@ MonoBehaviour:
   isGreen: 0
   _maxHealth: 100
   _currentHealth: 0
-  _speed: 5
+  _speed: 10
   _ogSpeed: 0
   teamBoss: {fileID: 0}
   isFlee: 0
+  goneFlee: 0
   _lowHealth: 25
   _recoverHealth: 50
+  allowRoulette: 0
   allyMinionsList: []
   enemiesMinionList: []
   sawEnemy: 0

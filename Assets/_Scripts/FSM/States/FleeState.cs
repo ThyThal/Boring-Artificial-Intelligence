@@ -25,6 +25,10 @@ public class FleeState<T> : FSMState<T>
     public override void Awake()
     {
         Debug.Log("Flee State Awake");
+        if (_minionController.currentEnemy == null)
+        {
+            _minionController.currentEnemy = _minionController.SelectRandomEnemy().transform;
+        }
 
         _flee = new Flee(_minionController.transform, _minionController.currentEnemy.transform, _minionController.GetComponent<Rigidbody>(), 0.5f);
         _avoid = new Avoid(_minionController.transform, _minionController.lineOfSight.obstaclesLayer, _minionController.obstacleRadius, _minionController.obstacleWeight);
@@ -33,7 +37,7 @@ public class FleeState<T> : FSMState<T>
         _minionController.goneFlee = true;
         fleeTimer = 6f;
 
-        if (_minionController.isBoss)
+        if (_minionController.isBoss == true)
         {
             _minionController.AlertFlee();
         }
@@ -51,6 +55,7 @@ public class FleeState<T> : FSMState<T>
         var currentLife = _minionController.lifeController.GetCurrentLife(); // Gets Current Life.
 
         CheckHealCooldown(); // Check Heal Cooldown
+        currentLife = _minionController.lifeController.GetCurrentLife();
 
         if (currentLife < _minionController._lowHealth) // If Minion is Low Health
         {
@@ -103,6 +108,7 @@ public class FleeState<T> : FSMState<T>
 
     public override void Sleep()
     {
+        _minionController._speed = _minionController._ogSpeed;
         _minionController.isFlee = false; // Resets to not Flee.
     }
 }

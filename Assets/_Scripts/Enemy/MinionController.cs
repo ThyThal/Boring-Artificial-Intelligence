@@ -27,9 +27,10 @@ public class MinionController : MonoBehaviour
     [Header("Low Health & Flee")]
     [SerializeField] public MinionController teamBoss;
     [SerializeField] public bool isFlee;
-    public bool goneFlee;
+    public bool goneFlee = false;
     [SerializeField] public float _lowHealth = 25f;
     [SerializeField] public float _recoverHealth = 50;
+    [SerializeField] public bool allowRoulette;
     private float _OGlowHealth;
 
 
@@ -103,20 +104,34 @@ public class MinionController : MonoBehaviour
         // Life
         _currentHealth = lifeController.GetCurrentLife();
 
-        if (isBoss == true && isFlee == false)
+        if (isBoss == false)
         {
-            CheckLineOfSight();
+            if (LowHealth() == true && allowRoulette == true)
+            {
+                if (goneFlee == false)
+                {
+                    RouletteAction(); // Create & Rolls Roulette    
+                }
+            }
+
+            if (teamBoss.isFlee == true)
+            {
+                fsm.Transition(States.FLOCKING);
+            } // Check if Boss Flees, Minion goes to FLOCKING.
+
         }
 
-        if (isBoss == false && teamBoss.isFlee == true)
+        if (isBoss == true)
         {
-            fsm.Transition(States.FLOCKING);
-        }
+            if (isFlee == false && allowRoulette == false)
+            {
+                CheckLineOfSight();
+            }  // Check Line of Sight.
 
-        if (_currentHealth < _lowHealth && goneFlee == false)
-        {
-            CreateRoulette();
-            fsm.Transition(ExecuteRoulette());
+            if (LowHealth() == true && allowRoulette == true)
+            {
+                RouletteAction(); // Create & Rolls Roulette
+            }
         }
 
         fsm.OnUpdate();
@@ -206,8 +221,8 @@ public class MinionController : MonoBehaviour
         List<Transform> nearAllies = flockComponent.GetNearbyEntities();
 
         _rouletteStates = new Dictionary<string, int>();
-        _rouletteStates.Add(_flee, 75);
-        _rouletteStates.Add(_pursuit, 25 * nearAllies.Count);
+        _rouletteStates.Add(_flee, 85);
+        _rouletteStates.Add(_pursuit, 15 * nearAllies.Count);
     }
     public MinionController.States ExecuteRoulette()
     {
@@ -300,5 +315,46 @@ public class MinionController : MonoBehaviour
         {
             fsm.Transition(MinionController.States.PURSUIT);
         }
+    }
+
+    private bool LowHealth()
+    {
+        if (_currentHealth < _lowHealth)
+        {
+            if (goneFlee == true)
+            {
+                allowRoulette = false;
+            }
+
+            else
+            {
+                allowRoulette = true;
+            }
+
+            return true;
+        }
+
+        else
+        {
+            return false;
+        }
+    }
+    private bool RecoverHealth()
+    {
+        if (_currentHealth < _recoverHealth)
+        {
+            return true;
+        }
+
+        else
+        {
+            return false;
+        }
+    }
+    private void RouletteAction()
+    {
+        CreateRoulette();
+        allowRoulette = false;
+        fsm.Transition(ExecuteRoulette());
     }
 }
