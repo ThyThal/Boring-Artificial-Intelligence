@@ -28,13 +28,13 @@ public class CanvasManager : MonoBehaviour
     {
         if (_orangeBoss != null)
         {
-            _orangeStatus.text = $"Status: {_orangeController._fsm.GetCurrentState()}";
+            _orangeStatus.text = $"Status: {_orangeController.fsm.GetCurrentState()}";
             _orangeLife.text = $"Life: {_orangeController.lifeController.GetCurrentLife()}";
         }
 
         if (_greenBoss != null)
         {
-            _greenStatus.text = $"Status: {_greenController._fsm.GetCurrentState()}";
+            _greenStatus.text = $"Status: {_greenController.fsm.GetCurrentState()}";
             _greenLife.text = $"Life: {_greenController.lifeController.GetCurrentLife()}";
         }
     }

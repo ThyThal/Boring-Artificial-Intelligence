@@ -9,7 +9,7 @@ public class SearchState<T> : FSMState<T>
     private MinionController _minionController;
 
     // Extra Variables.
-    private GameObject[] _minionsList;
+    private List<GameObject> _minionsList = new List<GameObject>();
     private int _pointer;
     private Transform _transform;
     private List<Node> _path;
@@ -26,7 +26,7 @@ public class SearchState<T> : FSMState<T>
         _minionController = minionController;
         _transform = minionController.transform;
         _nodes = GameManager.Instance.nodesList;
-        _minionsList = minionController.minionsList;
+        _minionsList = minionController.allyMinionsList;
 
         if (minionController.isBoss == true)
         {
@@ -62,19 +62,20 @@ public class SearchState<T> : FSMState<T>
             {
                 _pointer++;
             }
-        }
-
+        } // Run A*
         else
         {
-            foreach (var minion in _minionsList)
+            for (int i = 0; i < _minionController.allyMinionsList.Count; i++)
             {
-                if (minion != null)
+                var currentMinion = _minionController.allyMinionsList[i].GetComponent<MinionController>();
+                if (currentMinion != null)
                 {
-                    minion.GetComponent<MinionController>()._fsm.Transition(MinionController.States.IDLE);
-                    _pointer = 0;
+                    currentMinion.fsm.Transition(MinionController.States.IDLE);
                 }
             }
-        }
+
+            _pointer = 0;
+        } // If End of Path, Minions IDLE
     }
 
     public override void Sleep()

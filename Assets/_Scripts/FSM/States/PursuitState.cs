@@ -9,24 +9,33 @@ public class PursuitState<T> : FSMState<T>
     private Transform _enemyTransform;
     private MinionController _enemyController;
     public Avoid avoid;
+
+    private float currentAttackCooldown;
     private float currentDistance;
     public PursuitState(FSM<MinionController.States> fsm, MinionController minionController)
     {
         _fsm = fsm;
         _minionController = minionController;
+        currentAttackCooldown = _minionController.originalAttackCooldown;
     }
 
     public override void Awake()
-    {
-        //Debug.Log("Pursuit State Awake");
-        if (_enemyTransform == null) 
+    {        
+        Debug.Log("Pursuit State Awake");
+        if (_minionController.IsBossAlive() == false)
         {
-            _minionController.CheckEnemies();
-            _minionController.SelectRandomEnemy();
-            _enemyTransform = _minionController.currentEnemy;
+            _enemyController = _minionController.SelectRandomEnemy();
+            _enemyTransform = _enemyController.transform;
         }
 
         _enemyTransform = _minionController.currentEnemy;
+
+        if (_enemyTransform == null || _enemyController == null)
+        {
+            _enemyController = _minionController.SelectRandomEnemy();
+            _enemyTransform = _enemyController.transform;
+        }
+
         _enemyController = _enemyTransform.GetComponent<MinionController>();
 
         avoid = new Avoid(_minionController.transform, _minionController.lineOfSight.obstaclesLayer, _minionController.obstacleRadius, _minionController.obstacleWeight);
@@ -35,36 +44,33 @@ public class PursuitState<T> : FSMState<T>
 
     public override void Execute()
     {
+        // Cooldown
+        currentAttackCooldown -= Time.deltaTime;
+
         if (_enemyTransform != null)
         {
-            if (_enemyController.isFlee)
-            {
-                _enemyTransform = null;
-                _minionController.currentEnemy = null;
-                _minionController.CheckEnemies();
-                _enemyTransform = _minionController.currentEnemy;
-                //_fsm.Transition(MinionController.States.IDLE);
-            }
-
             CheckCooldown();
         }
 
         if (_enemyTransform == null)
-        {   
-            _minionController.CheckEnemies();
-            _enemyTransform = _minionController.currentEnemy;
-            //_fsm.Transition(MinionController.States.IDLE);
+        {
+            if (_minionController.lineOfSight.SawTarget() == false)
+            {
+                _fsm.Transition(MinionController.States.IDLE);
+            }
         }
     }
 
     public override void Sleep()
     {
-        
+        /*_enemyTransform = null;
+        _enemyController = null;
+        _minionController.currentEnemy = null;*/
     }
 
     private void CheckCooldown()
     {
-        if (_minionController.currentAttackCooldown <= 0)
+        if (currentAttackCooldown <= 0)
         {
             CheckDistance();
         }
@@ -72,13 +78,16 @@ public class PursuitState<T> : FSMState<T>
 
     private void CheckDistance()
     {
+        if (_enemyTransform == null) { return; }
         currentDistance = (_enemyTransform.position - _minionController.transform.position).magnitude;
+
         if (currentDistance > 8)
         {
+            avoid.SetTarget(_minionController.currentEnemy);
             _minionController.Move(avoid.GetDirection());
             _minionController.Look(_enemyTransform.position);
 
-            Debug.Log($"Enemy Transform: {_enemyTransform.position}");
+            //Debug.Log($"Enemy Transform: {_enemyTransform.position}");
         }
 
         if (currentDistance <= 10) { AttackEnemy(); }
@@ -102,6 +111,6 @@ public class PursuitState<T> : FSMState<T>
             return;
         }
 
-        _minionController.currentAttackCooldown = _minionController.originalAttackCooldown;
+        currentAttackCooldown = _minionController.originalAttackCooldown;
     }
 }

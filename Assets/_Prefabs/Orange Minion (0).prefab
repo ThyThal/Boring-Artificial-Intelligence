@@ -131,28 +131,29 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isBoss: 0
+  bossMultiplier: 5
   isGreen: 0
   _maxHealth: 100
   _currentHealth: 0
   _speed: 5
   _ogSpeed: 0
+  teamBoss: {fileID: 0}
   isFlee: 0
   _lowHealth: 25
   _recoverHealth: 50
-  minionsList: []
-  _enemiesList: []
+  allyMinionsList: []
+  enemiesMinionList: []
   sawEnemy: 0
   currentNode: {fileID: 0}
   currentEnemy: {fileID: 0}
+  savedEnemyPosition: {x: 0, y: 0, z: 0}
   currentObstacle: {fileID: 0}
   obstacleRadius: 2.5
   obstacleWeight: 1
   damage: 15
   attackDistace: 3
-  currentHealCooldown: 3
-  currentAttackCooldown: 1
-  originalAttackCooldown: 0
-  originalHealCooldown: 0
+  originalAttackCooldown: 1
+  originalHealCooldown: 1
   lineOfSight: {fileID: 1225480869053294252}
   enemyMovement: {fileID: 0}
   _flockingEntity: {fileID: 3156287376427929827}
@@ -182,6 +183,7 @@ MonoBehaviour:
   - {fileID: 2325298314247012398}
   - {fileID: 8558130217832281777}
   - {fileID: 1636947824232867364}
+  isFlocking: 0
 --- !u!114 &1225480869053294252
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -199,7 +201,7 @@ MonoBehaviour:
     m_Bits: 256
   sawTarget: 0
   target: {fileID: 0}
-  _sightRange: 10
+  _sightRange: 20
   _sightAngle: 130
 --- !u!114 &8968429719753946225
 MonoBehaviour:

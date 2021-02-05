@@ -8,12 +8,16 @@ public class LevelController : MonoBehaviour
     [SerializeField] private List<Node> _nodesList;
 
     [Header("Orange Team")]
-    [SerializeField] private Transform orangeBoss;
+    [SerializeField] private GameObject orangeBoss;
+    [SerializeField] private Transform orangeBossTransform;
     [SerializeField] private GameObject orangeMinion;
+    [SerializeField] public List<GameObject> orangeTeamList = new List<GameObject>();
 
     [Header("Green Team")]
-    [SerializeField] private Transform greenBoss;
+    [SerializeField] private GameObject greenBoss;
+    [SerializeField] private Transform greenBossTransform;
     [SerializeField] private GameObject greenMinion;
+    [SerializeField] public List<GameObject> greenTeamList = new List<GameObject>();
 
     private void Start()
     {
@@ -24,33 +28,44 @@ public class LevelController : MonoBehaviour
 
     public void GenerateTeams()
     {
+        // Generate Amount to Kill
         GameManager.Instance.greenKilledAmount = minionsAmount + 1;
         GameManager.Instance.orangeKilledAmount = minionsAmount + 1;
 
+        // Add Bosses to Lists
+        greenTeamList.Add(greenBoss);
+        orangeTeamList.Add(orangeBoss);
+
+        // Generate Minions
         for (int i = 0; i < minionsAmount; i++)
         {
-            var green = Instantiate(greenMinion, greenBoss);
+            // Gren Team Generator
+            var green = Instantiate(greenMinion, greenBossTransform); // Create Minion
+            greenTeamList.Add(green); // Add Minion to List
+
             Vector3 random = new Vector3(Random.Range(-2, 2), 0, Random.Range(-2, 2));
-            green.transform.position += random;
+            green.transform.position += random; // Random Position
 
-            var orange = Instantiate(orangeMinion, orangeBoss);
+            // Orange Team Generator
+            var orange = Instantiate(orangeMinion, orangeBossTransform); // Create Minion
+            orangeTeamList.Add(orange); // Add Minion to List
+
             random = new Vector3(Random.Range(-2, 2), 0, Random.Range(-2, 2));
-            orange.transform.position += random;
+            orange.transform.position += random; // Random Position
         }
 
-        GameObject[] greens = GameObject.FindGameObjectsWithTag("GreenEnemy");
-        GameObject[] oranges = GameObject.FindGameObjectsWithTag("OrangeEnemy");
-
-        foreach (var item1 in greens)
+        for (int i = 0; i < greenTeamList.Count; i++)
         {
-            var minion1 = item1.GetComponent<MinionController>();
-            minion1.GenerateLists();
-        }
+            var currentOrange = orangeTeamList[i].GetComponent<MinionController>();
+            currentOrange.teamBoss = orangeBoss.GetComponent<MinionController>();
+            currentOrange.allyMinionsList = orangeTeamList;
+            currentOrange.enemiesMinionList = greenTeamList;
 
-        foreach (var item2 in oranges)
-        {
-            var minion2 = item2.GetComponent<MinionController>();
-            minion2.GenerateLists();
+            var currentGreen = greenTeamList[i].GetComponent<MinionController>();
+            currentGreen.teamBoss = greenBoss.GetComponent<MinionController>();
+            currentGreen.allyMinionsList = greenTeamList;
+            currentGreen.enemiesMinionList = orangeTeamList;
+
         }
     }
 }
