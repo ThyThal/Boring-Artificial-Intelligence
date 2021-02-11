@@ -96,13 +96,19 @@ public class MinionController : MonoBehaviour
     protected virtual void Start()
     {
         InitializeFSM();
-        //InitializeBinaryTree();        
+        InitializeBinaryTree();        
     }
 
     protected virtual void Update()
     {
         // Life
         _currentHealth = lifeController.GetCurrentLife();
+        ExecuteBinaryTree();
+
+        if (transform.position.y < -5f)
+        {
+            Death();
+        }
 
         if (isBoss == false)
         {
@@ -177,11 +183,12 @@ public class MinionController : MonoBehaviour
     private void InitializeBinaryTree()
     {
         ActionNode _actionPursuit = new ActionNode(GoToPursuit);
-        ActionNode _actionRandomState = new ActionNode(GoToRandomState);
         ActionNode _actionNothing = new ActionNode(Nothing);
+        ActionNode _actionCheckEnemies = new ActionNode(CheckLineOfSight);
 
-        QuestionNode _questionSight = new QuestionNode(lineOfSight.SawTarget, _actionPursuit, _actionNothing);
-        _initTree = _questionSight;
+        QuestionNode _questionSight = new QuestionNode(lineOfSight.SawTarget, _actionCheckEnemies, _actionNothing); // If is not in flee and saw enemie, pursuit it.
+        QuestionNode _questionIsFlee = new QuestionNode(IsFlee, _actionNothing, _questionSight); // If is not in flee, don't look for enemies.
+        _initTree = _questionIsFlee;
     }
 
     public void ExecuteBinaryTree()
@@ -222,10 +229,14 @@ public class MinionController : MonoBehaviour
 
         _rouletteStates = new Dictionary<string, int>();
         _rouletteStates.Add(_flee, 85);
-        _rouletteStates.Add(_pursuit, 15 * nearAllies.Count);
+        _rouletteStates.Add(_pursuit, 15);
     }
     public MinionController.States ExecuteRoulette()
     {
+        var flockComponent = GetComponent<FlockingEntity>();
+        List<Transform> nearAllies = flockComponent.GetNearbyEntities();
+
+        _rouletteStates["_pursuit"] = 15 * nearAllies.Count;
         var a = _roulette.Run(_rouletteStates);
         if (a == _pursuit) { return States.PURSUIT; }
         else { return States.FLEE; }
@@ -247,6 +258,12 @@ public class MinionController : MonoBehaviour
     {
         transform.LookAt(new Vector3(point.x, transform.position.y, point.z));
     }
+
+    private bool IsFlee()
+    {
+        return isFlee;
+    }
+
     public void Death()
     {
         if (isGreen)
