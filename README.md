@@ -1,6 +1,8 @@
 ### ⌬ Final Inteligencia Artificial
-- Hacer Flocking
-- Añadir Avoid (Pursuit & Flee)
-- Agregar Waypoints y Agrandar Mapa.
-- Cambiar Sleep (Aumentar Curacion sin Escapar)
-- Ruleta Dinamica (Mas Valiente en Grupo)
+- Line of Sight
+- FSM ( Finite State Machine )
+- Steering Behaviours ( Avoid, Flee & Pursuit )
+- Pathfinding: AStar ( A* )
+- Decision Trees ( Binary Tree )
+- Roulette Wheel Selection
+- Flocking ( Boids )
